@@ -63,6 +63,10 @@ class ClientesController extends Zend_Controller_Action {
         }
     }
 
+    public function historicoAction() {
+        
+    }
+
     public function importarAction() {
         if ($this->_request->isPost()) {
 
