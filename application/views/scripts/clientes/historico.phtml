@@ -1,0 +1,78 @@
+<div id="conteudoCanvas">
+    
+    <div id="canvasHeader">
+        <div id="headerImagem" class="imgEmpresa"></div>
+
+        <h1>Emerson Dário</h1>
+
+        <ul class="listaInfo">
+            <li><span>Categoria:</span> Cliente efetivo</li>
+            <li><span>Telefone:</span> (44) 3232-0106</li>
+        </ul>
+
+        <ul id="headerSubMenu">
+            <li><span>Ver histórico</span></li>
+            <li class="spacer">|</li>
+            <li><a href="pessoas.php?em=657309" title="Ver pessoas deste Cliente">Ver pessoas</a></li>
+            <li class="spacer">|</li>
+            <li><a href="alterar.php?id=657309" title="Editar este Cliente">Editar</a></li>
+            <li class="spacer">|</li>
+            <li><a href="alterar.php?id=657309" title="Excluir este Cliente">Excluir</a></li>
+        </ul><!--headerSubMenu-->
+
+        <div class="clear"></div>
+
+    </div><!--canvasHeader-->
+    
+    <form action="" id="formComentar" method="post" enctype="multipart/form-data">
+        <fieldset>
+            <label for="formComentario">O que foi feito e qual o próximo passo?</label>
+            <textarea name="comentario[texto]" id="formComentario"></textarea>
+        </fieldset>
+        
+        <input type="submit" value="Gravar comentário" class="btn btn-info btn-mini pull-right" id="btnComentar">
+        
+        <a href="javascript:void(0);" id="lnkAdicionarArquivosImagens" title="Adicionar arquivos e imagens">Adicionar arquivos e imagens</a> ou,
+        <a href="javascript:void(0);" id="lnkDefinirAgendamento" title="definir agendamento">definir agendamento</a>
+        
+        <div class="clear"></div>
+    </form>
+
+    <ul class="canvasListagem" id="listComentarios">
+        <li class="item pb10 comentsPg0">
+            <span class="imgAvatar imgUsuario"></span><strong>emerson</strong>
+
+            <p>Agendamento de teste</p>
+            
+            <span class="bottom c999">
+                <span rel="tooltip" class="data ml20">20 de Maio às 11:25</span>
+            </span>
+
+            <ul class="menu">
+                <li><a href="" class="lnkEditarComentario cboxElement">Editar</a></li>
+                <li class="spacer">|</li>
+                <li><a href="javascript:void(0);" class="lnkExcluirComentario" title="Excluir este comentário">Excluir</a></li>
+            </ul>
+
+            <div class="clear"></div>
+        </li>
+        
+        <li class="item pb10 comentsPg0">
+            <span class="imgAvatar imgUsuario"></span><strong>emerson</strong>
+
+            <p>Agendamento de teste</p>
+            
+            <span class="bottom c999">
+                <span rel="tooltip" class="data ml20">20 de Maio às 11:25</span>
+            </span>
+
+            <ul class="menu">
+                <li><a href="" class="lnkEditarComentario cboxElement">Editar</a></li>
+                <li class="spacer">|</li>
+                <li><a href="javascript:void(0);" class="lnkExcluirComentario" title="Excluir este comentário">Excluir</a></li>
+            </ul>
+
+            <div class="clear"></div>
+        </li>
+    </ul>
+</div>
