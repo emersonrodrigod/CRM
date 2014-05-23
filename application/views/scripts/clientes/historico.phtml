@@ -33,9 +33,45 @@
             <textarea name="texto" id="formComentario"></textarea>
         </fieldset>
 
+        <fieldset id="setDtAgenDocsImgs">
+
+            <div id="setDtAgen" style="display: none;">
+                <a href="javascript:void(0)" class="btnFechar" id="btnFechar" title="Cancelar agendamento"></a>
+                <label>Tarefa para quando?</label>
+                <input type="text" name="dtAgendamento" id="formDtAgendamento" class="text focus hasDatepicker">às <input type="text" name="horaAgendamento" id="formHoraAgendamento" class="text w80" value="" autocomplete="off">
+
+                <label>A quem se destina?</label>
+
+                <ul class="ulSelUsuarios">
+                    <li>
+                        <label>
+                            <input type="checkbox" name="usuario[]" value="me" class="checkbox" checked="checked"> A mim<em></em>
+                        </label>
+                    </li>
+                </ul><!--ulSelUsuarios-->
+
+                <div class="clear"></div>
+
+            </div><!--setDtAgen-->
+
+            <div id="setDocsImgs" style="display: none;">
+                <ul>
+                    <li class="liImg">
+                        <input class="file" title="" name="arquivo[]" type="file">
+                        <a href="javascript:void(0);" class="btnExcluir">
+                            <img src="/img/icone-btn-fechar-cinza.gif" alt="Excluir">
+                        </a>
+                    </li>
+                    <li>
+                        <a href="javascript:void(0);" id="lnkAdicionarNovoArquivo">adicionar um arquivo</a>
+                    </li>
+                </ul>
+            </div><!--setDocsImgs-->
+        </fieldset>
+
         <input type="submit" value="Gravar comentário" class="btn btn-info btn-mini pull-right" id="btnComentar">
 
-        <a href="javascript:void(0);" id="lnkAdicionarArquivosImagens" title="Adicionar arquivos e imagens">Adicionar arquivos e imagens</a> ou,
+        <a href="javascript:void(0);" id="lnkAdicionarArquivosImagens" title="Adicionar arquivos">Adicionar arquivos</a> ou,
         <a href="javascript:void(0);" id="lnkDefinirAgendamento" title="definir agendamento">definir agendamento</a>
 
         <div class="clear"></div>
@@ -72,4 +108,65 @@
             texto: {required: true, minLenght: 3}
         }
     });
+
+    var getHtmlNovaImagem = function() {
+        return '<li class="liImg">' +
+                '<input class="file" title="" name="arquivo[]" type="file">' +
+                '<a href="javascript:void(0);" class="btnExcluir">' +
+                '<img src="/img/icone-btn-fechar-cinza.gif" alt="Excluir">' +
+                '</a></li>';
+    };
+
+    $("#setDocsImgs #lnkAdicionarNovoArquivo").click(function() {
+        $(this).parent().before(getHtmlNovaImagem());
+    });
+
+    $("body").on('click', '.btnExcluir', function() {
+        $(this).parent().remove();
+    });
+
+    $("#lnkDefinirAgendamento").click(function() {
+        if ($("#setDtAgen").is(":visible"))
+            cancelarAgendamento();
+        else
+            mostraAgendamento();
+    });
+
+    $("#btnFechar").click(function() {
+        cancelarAgendamento();
+    });
+
+    $("#lnkAdicionarArquivosImagens").click(function() {
+        if ($("#setDocsImgs").is(":visible")) {
+            $("#setDocsImgs").slideUp('fast', function() {
+                cancelarArquivos();
+            });
+        } else {
+            mostrarArquivos();
+        }
+    });
+
+
+    var mostraAgendamento = function() {
+        $("#setDtAgen").slideDown('fast');
+        $("#lnkDefinirAgendamento").attr('title', 'cancelar agendamento').html("cancelar agendamento");
+        $(".ulSelUsuarios").find("li input[type=checkbox]:first").attr('checked', true);
+    };
+
+    var cancelarAgendamento = function() {
+        $(".ulSelUsuarios").find("li input[type=checkbox]").attr('checked', false);
+        $("#setDtAgen").hide();
+        $("#setDtAgen").slideUp('fast');
+        $("#lnkDefinirAgendamento").attr('title', 'definir agendamento').html("definir agendamento");
+    };
+
+    var mostrarArquivos = function() {
+        $("#setDocsImgs").slideDown('fast');
+        $("#lnkAdicionarArquivosImagens").attr('title', 'Cancelar arquivos').html("Cancelar arquivos");
+    };
+
+    var cancelarArquivos = function() {
+        $("#setDocsImgs li.liImg, #setDocsImgs li.liDoc").remove();
+        $("#lnkAdicionarArquivosImagens").attr('title', 'Adicionar arquivos').html("Adicionar Arquivos");
+    };
 </script>  

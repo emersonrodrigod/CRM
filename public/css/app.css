@@ -834,9 +834,11 @@ h2 {
 #formComentar #setDtAgenDocsImgs input.w { width:25%; }
 #setDtAgenDocsImgs #setDtAgen { position:relative; min-height:10px; margin:0 0 5px 0; padding-bottom:10px; border-bottom:1px dashed #ccc; }
 #setDtAgenDocsImgs #setDtAgen a.btnFechar { position:absolute; top:0px; right:0px; }
+.btnFechar { position:absolute; width:14px; height:13px; background:url(/img/icone-btn-fechar-cinza.gif) no-repeat right center; text-indent:-9000px; }
 
-#setDtAgenDocsImgs #setDocsImgs { min-height:10px; margin:15px 0 5px 0; padding-bottom:10px; border-bottom:1px dashed #ccc; }
-#setDtAgenDocsImgs #setDocsImgs ul li { padding-left:22px; padding-bottom:5px; }
+#setDtAgenDocsImgs #setDocsImgs { min-height:10px; margin:10px 0 5px 0; padding-bottom:10px; border-bottom:1px dashed #ccc;}
+#setDtAgenDocsImgs #setDocsImgs ul {margin:0; list-style: none;}
+#setDtAgenDocsImgs #setDocsImgs ul li { padding-left:0px; padding-bottom:5px; }
 #setDtAgenDocsImgs #setDocsImgs ul li a { font-weight:bold; }
 #setDtAgenDocsImgs #setDocsImgs ul li a.btnExcluir { text-decoration:none; vertical-align:middle; }
 #setDtAgenDocsImgs #setDocsImgs ul li.liImg { background:url(imagens/icones/icone-image.png) no-repeat 0px 4px;  }
@@ -917,3 +919,11 @@ a.finTarefa.atrasada { background-position:0px -28px; }
 #conteudoCanvas ul li.item .menu li.spacer { margin:0px 8px; }
 #conteudoCanvas ul li.item .menu li strong { font:bold 12px Arial; }
 #conteudoCanvas ul li.item:hover .menu { display:block; }
+
+ul.ulSelUsuarios { text-align:left; max-height:150px; overflow:auto; padding:3px 3px 3px 0px; width:300px; margin:0;}
+ul.ulSelUsuarios li { margin:0px!important; }
+ul.ulSelUsuarios li:hover { background:#fffac3; }
+ul.ulSelUsuarios li.buscando { color:#999; background:#fff url(../imagens/loaders/ajax-loader-azul.gif) no-repeat center left; padding-left:24px; }
+ul.ulSelUsuarios li input.checkbox { height:14px; width:14px; margin-right:5px; }
+ul.ulSelUsuarios li label { padding:3px; font:normal 12px Arial!important; margin:0 0 0 0!important; padding:2px!important; cursor:pointer; display:block; }
+ul.ulSelUsuarios li em { margin-left:5px; font:11px Arial; }
