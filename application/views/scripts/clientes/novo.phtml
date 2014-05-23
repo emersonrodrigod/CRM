@@ -1,0 +1,146 @@
+<div class="row-fluid">
+    <h2>Novo Cliente</h2>
+
+    <hr>
+
+    <form method="post" class="form-horizontal" id="usuario">
+        <div class="row-fluid">
+            <div class="span1 txtCenter">
+                <i class="icon-user icon-3x muted"></i>
+            </div>
+            <div class="span11">
+                <div class="control-group">
+                    <label class="control-label">
+                        <label for="codigo">Código</label>
+                    </label>
+                    <div class="controls">
+                        <input type="text" name="codigo" class="input-xlarge">							
+                    </div>
+                </div>
+                <div class="control-group">
+                    <label class="control-label">
+                        <label for="nome">Nome</label>
+                    </label>
+                    <div class="controls">
+                        <input type="text" name="nome" class="input-xlarge">							
+                    </div>
+                </div>
+
+                <div class="control-group">
+                    <label class="control-label">
+                        <label for="estado">Categoria</label>
+                    </label>
+                    <div class="controls">
+                        <select name="estado" id="estado" class="input-xlarge">
+                            <option value="">Selecione o estado</option>
+                            <option value="AC">Acre</option>
+                            <option value="AL">Alagoas</option>
+                            <option value="AP">Amapá</option>
+                            <option value="AM">Amazonas</option>
+                            <option value="BA">Bahia</option>
+                            <option value="CE">Ceará</option>
+                            <option value="DF">Distrito Federal</option>
+                            <option value="ES">Espirito Santo</option>
+                            <option value="GO">Goiás</option>
+                            <option value="MA">Maranhão</option>
+                            <option value="MT">Mato Grosso</option>
+                            <option value="MS">Mato Grosso do Sul</option>
+                            <option value="MG">Minas Gerais</option>
+                            <option value="PA">Pará</option>
+                            <option value="PB">Paraiba</option>
+                            <option value="PR">Paraná</option>
+                            <option value="PE">Pernambuco</option>
+                            <option value="PI">Piauí</option>
+                            <option value="RJ">Rio de Janeiro</option>
+                            <option value="RN">Rio Grande do Norte</option>
+                            <option value="RS">Rio Grande do Sul</option>
+                            <option value="RO">Rondônia</option>
+                            <option value="RR">Roraima</option>
+                            <option value="SC">Santa Catarina</option>
+                            <option value="SP">São Paulo</option>
+                            <option value="SE">Sergipe</option>
+                            <option value="TO">Tocantis</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="control-group">
+                    <label class="control-label">
+                        <label for="cnpj">Cnpj</label>
+                    </label>
+                    <div class="controls">
+                        <input type="text" name="cnpj" class="input-xlarge">							
+                    </div>
+                </div>
+                <div class="control-group">
+                    <label class="control-label">
+                        <label for="telefone">Telefone</label>
+                    </label>
+                    <div class="controls">
+                        <input type="text" name="telefone" class="input-xlarge tel">							
+                    </div>
+                </div>
+                <div class="control-group">
+                    <label class="control-label">
+                        <label for="email">E-mail</label>
+                    </label>
+                    <div class="controls">
+                        <input type="text" name="email" class="input-xlarge">							
+                    </div>
+                </div>
+
+                <div class="control-group">
+                    <label class="control-label">
+                        <label for="descricao">Descrição</label>
+                    </label>
+                    <div class="controls">
+                        <textarea name="descricao" class="input-xlarge"></textarea>							
+                    </div>
+                </div>
+
+                <div class="control-group">
+                    <label class="control-label">
+                        <label for="categoria">Categoria</label>
+                    </label>
+                    <div class="controls">
+                        <select name="id_categoria" id="empresa" class="input-xlarge">
+                            <option value="">Selecione uma Categoria</option>
+                            <?php foreach ($this->categorias as $categoria) : ?>
+                                <option value="<?php echo $categoria->id; ?>"><?php echo $categoria->nome; ?></option>
+                            <?php endforeach; ?>
+                        </select>							
+                    </div>
+                </div>
+                <div class="control-group">
+                    <label class="control-label">
+                        <label for="responsavel">Responsável</label>
+                    </label>
+                    <div class="controls">
+                        <select name="id_responsavel" id="empresa" class="input-xlarge">
+                            <option value="">Selecione um Responsável</option>
+                            <?php foreach ($this->usuarios as $usuario) : ?>
+                                <option value="<?php echo $usuario->id; ?>"><?php echo $usuario->nome; ?></option>
+                            <?php endforeach; ?>
+                        </select>							
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="form-actions">
+            <input type="submit" id="submitbutton" class="btn btn-primary" value="Salvar">  
+            <a href="/clientes" class="btn">Cancelar</a>
+        </div>
+
+    </form>
+
+    <script type="text/javascript">
+        $('#usuario').validate({
+            rules: {
+                nome: {required: true, minLenght: 3},
+                codigo: {required: true, minLenght: 6}
+            }
+        });
+    </script>  
+
+</div>

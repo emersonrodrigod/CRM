@@ -1,0 +1,118 @@
+<div class="row-fluid">
+    <h2>Editar Usuário</h2>
+
+    <hr>
+
+    <form method="post" class="form-horizontal" id="usuario">
+        <div class="row-fluid">
+            <div class="span1 txtCenter">
+                <i class="icon-user icon-3x muted"></i>
+            </div>
+            <div class="span11">
+                <div class="control-group">
+                    <label class="control-label">
+                        <label for="nome">Nome</label>
+                    </label>
+                    <div class="controls">
+                        <input type="text" name="nome" class="input-xlarge" value="<?php echo $this->usuario->nome; ?>">							
+                    </div>
+                </div>
+                <div class="control-group">
+                    <label class="control-label">
+                        <label for="email">E-mail</label>
+                    </label>
+                    <div class="controls">
+                        <input type="text" name="email" class="input-xlarge" value="<?php echo $this->usuario->email; ?>">							
+                    </div>
+                </div>
+                <div class="control-group">
+                    <label class="control-label">
+                        <label for="role">Role</label>
+                    </label>
+                    <div class="controls">
+                        <select name="role" class="input-xlarge">
+                            <option value="">Selecione um role....</option> 
+                            <option <?php echo ($this->usuario->role == 'usuario' ? 'selected="selected"' : ''); ?> value="usuario">Usuário</option> 
+                            <option <?php echo ($this->usuario->role == 'admin' ? 'selected="selected"' : ''); ?> value="admin">Administrador</option> 
+                        </select>							
+                    </div>
+                </div>
+                <div class="control-group">
+                    <label class="control-label">
+                        <label for="empresa">Empresa</label>
+                    </label>
+                    <div class="controls">
+                        <select name="id_empresa" id="empresa" class="input-xlarge">
+                            <option value="">Selecione uma Empresa....</option>
+                            <?php
+                            foreach ($this->empresas as $empresa) :
+                                $select = ($empresa->id == $this->usuario->id_empresa ? 'selected="selected"' : "");
+                                ?>
+                                <option <?php echo $select; ?>value="<?php echo $empresa->id; ?>"><?php echo $empresa->nome; ?></option>
+                            <?php endforeach; ?>
+                        </select>							
+                    </div>
+                </div>
+                <div class="control-group">
+                    <label class="control-label">
+                        <label for="departamento">Departamento</label>
+                    </label>
+                    <div class="controls">
+                        <select name="id_departamento" id="departamento" class="input-xlarge">
+                            <option value="">Selecione um Departamento....</option> 
+                            <?php
+                            foreach ($this->departamentos as $departamento) :
+                                $select = ($departamento->id == $this->usuario->id_departamento ? 'selected="selected"' : "");
+                                ?>
+                                <option <?php echo $select; ?>value="<?php echo $departamento->id; ?>"><?php echo $departamento->nome; ?></option>
+                            <?php endforeach; ?>
+                        </select>							
+                    </div>
+                </div>
+                <div class="control-group">
+                    <label class="control-label">
+                        <label class="radio" for="situacao">Situação</label>
+                    </label>
+                    <div class="controls">
+                        <label class="radio">
+                            <input type="radio" name="ativo" value="1" <?php echo ($this->usuario->ativo == 1 ? 'checked="checked"' : ''); ?> >Ativo
+                        </label>
+                        <label class="radio">
+                            <input type="radio" name="ativo" value="0" <?php echo ($this->usuario->ativo == 0 ? 'checked="checked"' : ''); ?> >Inativo
+                        </label>							
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="form-actions">
+            <input type="submit" id="submitbutton" class="btn btn-primary" value="Salvar">  
+            <a href="/usuarios" class="btn">Cancelar</a>
+        </div>
+
+    </form>
+
+    <script type="text/javascript">
+        $('#usuario').validate({
+            rules: {
+                nome: {required: true, minLenght: 2},
+                email: {required: true, email: true},
+                role: {required: true},
+                id_empresa: {required: true},
+                id_departamento: {required: true}
+            }
+        });
+
+        $('#empresa').change(function() {
+            $("#departamento").html('<option value="">Carregando....</option>');
+            $.getJSON('/usuarios/departamentos', {empresa: $(this).val(), ajax: 'true'}, function(j) {
+                var options = '<option value="">Selecione um Departamento</option>';
+                for (var i = 0; i < j.length; i++) {
+                    options += '<option value="' + j[i].id + '">' + j[i].nome + '</option>';
+                }
+                $('#departamento').html(options).show();
+            });
+        });
+    </script>  
+
+</div>

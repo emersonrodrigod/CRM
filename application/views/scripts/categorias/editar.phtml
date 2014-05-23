@@ -1,0 +1,51 @@
+<div class="row-fluid">
+    <h2>Editar Categoria</h2>
+
+    <hr>
+
+    <form method="post" class="form-horizontal" id="usuario">
+        <div class="row-fluid">
+            <div class="span1 txtCenter">
+                <i class="icon-list icon-3x muted"></i>
+            </div>
+            <div class="span11">
+                <div class="control-group">
+                    <label class="control-label">
+                        <label for="nome">Nome</label>
+                    </label>
+                    <div class="controls">
+                        <input type="text" name="nome" class="input-xlarge" value="<?php echo $this->categoria->nome; ?>">							
+                    </div>
+                </div>
+                <div class="control-group">
+                    <label class="control-label">
+                        <label class="radio" for="situacao">Situação</label>
+                    </label>
+                    <div class="controls">
+                        <label class="radio">
+                            <input type="radio" name="ativo" value="1" <?php echo ($this->categoria->ativo == 1 ? 'checked="checked"' : ''); ?> >Ativo
+                        </label>
+                        <label class="radio">
+                            <input type="radio" name="ativo" value="0" <?php echo ($this->categoria->ativo == 0 ? 'checked="checked"' : ''); ?> >Inativo
+                        </label>							
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="form-actions">
+            <input type="submit" id="submitbutton" class="btn btn-primary" value="Salvar">  
+            <a href="/categorias" class="btn">Cancelar</a>
+        </div>
+
+    </form>
+
+    <script type="text/javascript">
+        $('#usuario').validate({
+            rules: {
+                nome: {required: true, minLenght: 2}
+            }
+        });
+    </script>  
+
+</div>

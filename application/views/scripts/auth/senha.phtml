@@ -1,0 +1,47 @@
+<div class="row-fluid">
+    <h2>Alterar Senha</h2>
+
+    <hr>
+
+    <form method="post" class="form-horizontal" id="usuario">
+        <div class="row-fluid">
+            <div class="span1 txtCenter">
+                <i class="icon-user icon-3x muted"></i>
+            </div>
+            <div class="span11">
+                <div class="control-group">
+                    <label class="control-label">
+                        <label for="senha">Senha</label>
+                    </label>
+                    <div class="controls">
+                        <input type="password" name="senha" id="senha" class="input-xlarge">							
+                    </div>
+                </div>
+                <div class="control-group">
+                    <label class="control-label">
+                        <label for="confirma">Confirma senha</label>
+                    </label>
+                    <div class="controls">
+                        <input type="password" name="confirma" class="input-xlarge">							
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="form-actions">
+            <input type="submit" id="submitbutton" class="btn btn-primary" value="Salvar">  
+            <a href="/index/configuracoes" class="btn">Cancelar</a>
+        </div>
+
+    </form>
+
+    <script type="text/javascript">
+        $('#usuario').validate({
+            rules: {
+                senha: {required: true},
+                confirma: {equalTo: "#senha"}
+            }
+        });
+    </script>
+
+</div>

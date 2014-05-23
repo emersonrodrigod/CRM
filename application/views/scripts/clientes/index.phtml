@@ -1,0 +1,148 @@
+<div class="row-fluid">
+    <div class="span12">
+        <h2><i class="icon-user"></i> Clientes</h2>
+
+        <hr>
+
+        <p>
+            <a href="/clientes/novo" class="btn btn-primary"><i class="icon-user"></i> &nbsp; Novo Cliente</a>
+            <a href="#" id="mostraFiltro" class="btn-small btn-primary pull-right"><i class="icon-filter"></i> &nbsp; Filtro</a>
+        </p>
+
+
+        <div id="filtros" class="row-fluid">
+
+            <form method="post" class="well" id="pesquisaCliente">
+                <legend>Pesquisa de Clientes</legend>
+
+                <div class="controls-row">
+
+                    <div class="control-group label-inline">
+                        <label for="cnpj" class="control-label">CNPJ:</label>
+                        <div class="controls">
+                            <input type="text" id="cnpj" name="cnpj" class="input-medium cnpj"/>
+                        </div>                
+                    </div>
+
+                    <div class="control-group label-inline">
+                        <label for="nome" class="control-label">Nome do cliente:</label>
+                        <div class="controls">
+                            <input type="text" id="nome" name="nome" class="input-xxlarge"/>
+                        </div>                
+                    </div>
+                </div>
+
+                <div class="controls-row">
+
+                    <div class="control-group label-inline">
+                        <label for="categoria" class="control-label">Categoria:</label>
+                        <div class="controls">
+                            <select name="categoria" id="categoria">
+                                <option value="">Todas</option>
+                            </select>
+                        </div>                
+                    </div>
+
+                    <div class="control-group label-inline">
+                        <label for="responsavel" class="control-label">Responsável:</label>
+                        <div class="controls">
+                            <select name="responsavel" id="responsavel">
+                                <option value="">Todos</option>
+                            </select>
+                        </div>                
+                    </div>
+
+                    <div class="control-group label-inline">
+                        <label for="estado" class="control-label">Estado:</label>
+                        <div class="controls">
+                            <select name="estado" id="estado">
+                                <option value="">Selecione o estado</option>
+                                <option value="AC">Acre</option>
+                                <option value="AL">Alagoas</option>
+                                <option value="AP">Amapá</option>
+                                <option value="AM">Amazonas</option>
+                                <option value="BA">Bahia</option>
+                                <option value="CE">Ceará</option>
+                                <option value="DF">Distrito Federal</option>
+                                <option value="ES">Espirito Santo</option>
+                                <option value="GO">Goiás</option>
+                                <option value="MA">Maranhão</option>
+                                <option value="MT">Mato Grosso</option>
+                                <option value="MS">Mato Grosso do Sul</option>
+                                <option value="MG">Minas Gerais</option>
+                                <option value="PA">Pará</option>
+                                <option value="PB">Paraiba</option>
+                                <option value="PR">Paraná</option>
+                                <option value="PE">Pernambuco</option>
+                                <option value="PI">Piauí</option>
+                                <option value="RJ">Rio de Janeiro</option>
+                                <option value="RN">Rio Grande do Norte</option>
+                                <option value="RS">Rio Grande do Sul</option>
+                                <option value="RO">Rondônia</option>
+                                <option value="RR">Roraima</option>
+                                <option value="SC">Santa Catarina</option>
+                                <option value="SP">São Paulo</option>
+                                <option value="SE">Sergipe</option>
+                                <option value="TO">Tocantis</option>
+                            </select>
+                        </div>
+                    </div>                
+                </div>
+
+                <div class="controls-row">
+                    <div class="control-group label-inline">
+                        <label for="submitbutton" class="control-label">&nbsp;</label>
+                        <div class="controls">
+                            <input type="button" id="pesquisar" class="btn btn-small btn-primary" value="Pesquisar">  
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+
+        <div id="lista" class="row-fluid">
+        </div>
+
+        <div style="text-align: center; margin-top: 30px; display: none;" id="carregando">
+            <span><img src="/img/loader_sessoes.gif" alt=""></span>
+        </div>
+
+
+        <script type="text/javascript">
+            $("#mostraFiltro").click(function() {
+                $("#filtros").toggle("slow");
+            });
+
+            $.getJSON('/ajax/get-categorias', {ajax: 'true'}, function(j) {
+                var options = '<option value="">Todas</option>';
+                for (var i = 0; i < j.length; i++) {
+                    options += '<option value="' + j[i].id + '">' + j[i].nome + '</option>';
+                }
+                $('#categoria').html(options).show();
+            });
+
+            $.getJSON('/ajax/get-usuarios', {ajax: 'true'}, function(j) {
+                var options = '<option value="">Todos</option>';
+                for (var i = 0; i < j.length; i++) {
+                    options += '<option value="' + j[i].id + '">' + j[i].nome + '</option>';
+                }
+                $('#responsavel').html(options).show();
+            });
+
+            $("#pesquisar").click(function() {
+                $('#lista').html("");
+                $('#filtros').hide();
+                $('#carregando').show();
+                $.post("/clientes/lista", $("#pesquisaCliente").serialize()).done(function(data) {
+                    $('#carregando').hide();
+                    $("#lista").html(data);
+                });
+            });
+
+<?php if (isset($this->clientes)) : ?>
+                $("#mostraFiltro").show();
+                $("#filtros").hide();
+<?php endif; ?>
+        </script> 
+    </div>
+</div>

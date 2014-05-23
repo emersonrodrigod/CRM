@@ -1,0 +1,28 @@
+<?xml version="1.0"?>
+<acl>
+    <resources>
+        <r0001 resource="default:auth" />
+        <r0002 resource="default:index" />
+        <r0003 resource="default:usuarios" />
+        <r0004 resource="default:categorias" />
+        <r0005 resource="default:empresas" />
+        <r0006 resource="default:ajax" />
+        <r0007 resource="default:clientes" />
+    </resources>
+    <roles>
+        <r0001 role="guest" />
+        <r0002 role="registered" inherit="guest" />
+        <r0003 role="admin"  inherit="registered" />
+        <r0004 role="usuario"  inherit="registered" />
+    </roles>
+    <allow>
+        <a0001 role="guest" resource="default:auth" privileges="index,logout,request-password" />
+        <a0003 role="admin" resource="default:auth" />
+        <a0004 role="admin" resource="default:index" />
+        <a0005 role="admin" resource="default:usuarios" />
+        <a0006 role="admin" resource="default:categorias" />
+        <a0007 role="admin" resource="default:empresas" />
+        <a0008 role="admin" resource="default:ajax" />
+        <a0009 role="admin" resource="default:clientes" />
+    </allow>
+</acl>

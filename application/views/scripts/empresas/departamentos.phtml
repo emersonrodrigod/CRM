@@ -1,0 +1,78 @@
+<div class="row-fluid" ng-app ng-controller="DepartamentosController">
+    <div ng-init="getDepartamentos(<?php echo $this->empresa->id; ?>);"></div>
+    <h2>Departamentos da Empresa <?php echo $this->empresa->nome; ?> </h2>
+
+    <hr>
+    <form class="form-horizontal" id="1">
+        <input type="hidden" name="id" value="{{departamento.id}}" ng-model="departamento.id">
+        <input type="hidden" name="id_empresa" value="<?php echo $this->empresa->id; ?>" ng-model="departamento.id_empresa">
+        <div class="row-fluid">
+            <div class="span12">
+                <div class="control-group">
+                    <label class="control-label">
+                        <label for="nome">Nome</label>
+                    </label>
+                    <div class="controls">
+                        <input type="text" name="nome" class="input-xlarge" ng-model="departamento.nome"> &nbsp;
+                        <a href="javascript:void(0)" class="btn btn-primary" ng-click="salvar(1,<?php echo $this->empresa->id; ?>)">Salvar</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+
+    <hr/>
+
+    <form class="form-search well clearfix">
+
+
+        <input type="text" class="span3 search-query" ng-model="search.$" placeholder="Digite uma palavra-chave">
+
+        &nbsp;&nbsp;&nbsp;
+
+        <div class="btn-group" data-toggle="buttons-radio">
+            <a href="#." class="btn btn-mini active" ng-click="search.ativo = ''">Todos</a>
+            <a href="#." class="btn btn-mini" ng-click="search.ativo = '1'">Ativos</a>
+            <a href="#." class="btn btn-mini" ng-click="search.ativo = '0'">Inativos</a>
+        </div>
+
+        <small class="fRight">Exibindo <strong ng-bind="(departamentos|filter:search).length"></strong> de <strong ng-bind="departamentos.length"></strong> Departametnos.</small>
+    </form>
+
+
+
+    <div ng-hide="departamentos" class="txtCenter">
+        <div ng-switch on="departamentos.length" >
+            <div ng-switch-when="0">Nenhum Departamento Cadastrado.</div>
+            <span ng-switch-default><img src="/img/loader_sessoes.gif" alt=""></span>
+        </div>
+    </div>
+
+
+    <table class="table table-hover dataTable">
+        <thead>
+            <tr>
+                <th width="5%">#id</th>
+                <th>Nome</th>
+                <th width="15%" class="txtCenter">Situação</th>
+                <th width="10%">&nbsp;</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr ng-repeat="d in departamentos | filter:search">
+                <td>{{d.id}}</td>
+                <td>{{d.nome}}</td>
+                <td class="txtCenter">
+                    <div ng-switch="d.ativo">
+                        <div ng-switch-when="1">Ativo</div>
+                        <div ng-switch-when="0">Inativo</div>
+                    </div>
+                </td>
+                <td>
+                    <a href="javascript:void(0)" ng-click="editar(d)" class="btn btn-small"><i class="icon-edit"></i></a>
+                    <a href="javascript:void(0)" ng-click="excluir(d, <?php echo $this->empresa->id; ?>)" class="btn btn-danger btn-small delete"><i class="icon-remove-sign"></i></a>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>

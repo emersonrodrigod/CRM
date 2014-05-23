@@ -1,0 +1,67 @@
+<div class="row-fluid">
+    <div class="span12">
+        <h2><i class="icon-list"></i> Categorias</h2>
+
+        <hr>
+
+        <p><a href="/categorias/novo" class="btn btn-primary"><i class="icon-list"></i> &nbsp; Nova Categoria</a></p>
+
+        <table class="table table-hover dataTable">
+            <thead>
+                <tr>
+                    <th width="5%">#id</th>
+                    <th>Nome</th>
+                    <th width="10%">Ativo</th>
+                    <th width="15%">&nbsp;</th>
+                </tr>
+            </thead>
+            <tbody>
+                <?php foreach ($this->categorias as $categoria) : ?>
+                    <tr>
+                        <td><?php echo $categoria->id; ?></td>
+                        <td><a href="/categorias/editar/id/<?php echo $categoria->id; ?>"><?php echo $categoria->nome; ?></a></td>
+                        <td><?php echo ($categoria->ativo == 1 ? 'Sim' : 'Não'); ?></td>
+                        <td>
+                            <a href="/categorias/editar/id/<?php echo $categoria->id; ?>" class="btn btn-small"><i class="icon-edit"></i></a>
+                            <a href="/categorias/remover/id/<?php echo $categoria->id; ?>" class="btn btn-danger btn-small delete"><i class="icon-remove-sign"></i></a>
+                        </td>
+                    </tr>
+                <?php endforeach; ?>
+            </tbody>
+        </table>
+        <script type="text/javascript">
+            $(function() {
+                var oTable = $('.dataTable').dataTable({
+                    "sPaginationType": "full_numbers",
+                    "sDom": 'f<"toolbar">lrtip',
+                    "oLanguage": {
+                        "sProcessing": "Processando...",
+                        "sLengthMenu": "Mostrar _MENU_ registros",
+                        "sZeroRecords": "Não foram encontrados resultados",
+                        "sInfo": "Mostrando de _START_ até _END_ de _TOTAL_ registros",
+                        "sInfoEmpty": "Mostrando de 0 até 0 de 0 registros",
+                        "sInfoFiltered": "(filtrado de _MAX_ registros no total)",
+                        "sInfoPostFix": "",
+                        "sSearch": "Buscar:",
+                        "sUrl": "",
+                        "oPaginate": {
+                            "sFirst": "Primeiro",
+                            "sPrevious": "Anterior",
+                            "sNext": "Seguinte",
+                            "sLast": "Último"
+                        }
+                    }
+                });
+                var select = '<select name="situacao">';
+                select += '<option value="">Todos</option>';
+                select += '<option value="Sim">Ativos</option>';
+                select += '<option value="Não">Inativos</option>';
+                select += '</select>';
+                $("div.toolbar").html('<label>Filtrar: ' + select + '</label>');
+                $('select[name=situacao]', this).change(function() {
+                    oTable.fnFilter($(this).val(), 2);
+                });
+            });
+        </script> 
+    </div>
+</div>

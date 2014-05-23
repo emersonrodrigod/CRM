@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+    <head>
+        <title>CRM - Vicentinos</title>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+        <!-- Bootstrap -->
+        <link href="/lib/bootstrap/css/bootstrap.min.css" rel="stylesheet" media="screen">
+        <link href="/lib/bootstrap/css/bootstrap-responsive.min.css" rel="stylesheet" media="screen">
+
+        <!-- font-awesome -->
+        <link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+
+        <!-- Application -->
+        <link href="/css/app.css" rel="stylesheet" media="screen">
+
+        <link rel="stylesheet" href="/js/datepicker/css/datepicker.css" media="all">
+
+        <!-- scripts -->
+        <script type="text/javascript" src="/js/jquery.min.js"></script>
+        <script type="text/javascript" src="/js/jquery-ui.min.js"></script>
+        <script type="text/javascript" src="/js/jquery.ui.datepicker-pt-BR.js"></script>
+        <script type="text/javascript" src="/js/fastclick.min.js"></script>
+        <script type="text/javascript" src="/js/jquery.nicescroll.min.js"></script>
+        <script type="text/javascript" src="/js/jquery.blockUI.js"></script>
+        <script type="text/javascript" src="/js/modernizr.min.js"></script>
+        <script type="text/javascript" src="/js/jquery.price.js"></script>
+        <script type="text/javascript" src="/js/jquery.inputmask.js"></script>
+        <script type="text/javascript" src="/js/jquery.inputmask.extensions.js"></script>
+        <script type="text/javascript" src="/js/cidades-uf.js"></script>
+        <script type="text/javascript" src="/js/fullcalendar.min.js"></script>
+        <script type="text/javascript" src="/js/datepicker/js/bootstrap-datepicker.js"></script>
+        <script type="text/javascript" src="/js/datepicker/js/locales/bootstrap-datepicker.pt-BR.js"></script>
+        <!--[if lt IE 9]>
+        <script type="text/javascript" src="/js/html5.js"></script>
+        <![endif]-->
+        <script type="text/javascript" src="/js/angular.min.js"></script>
+        <script type="text/javascript" src="/js/angular-resource.min.js"></script>
+        <script type="text/javascript" src="/js/global.js"></script>
+        <script type="text/javascript" src="/js/bootstrap-timepicker.js"></script>
+        <script type="text/javascript" src="/js/bootstrap-datepicker.js"></script>
+        <script type="text/javascript" src="/js/bootstrap-datepicker.pt-BR.js"></script>
+        <script type="text/javascript" src="/lib/validation/jquery.validate.min.js"></script>
+        <script type="text/javascript" src="/lib/validation/localization/messages_ptbr.js"></script>
+        <script type="text/javascript" src="/lib/bootstrap/js/bootstrap.min.js"></script>
+        <script type="text/javascript" src="/js/jsapi.js"></script>
+        <script type="text/javascript" src="/js/jquery.dataTables.min.js"></script>
+        <script type="text/javascript" src="/js/controllers.js"></script>
+    </head>
+    <body>
+
+        <div class="navbar navbar-inverse navbar-fixed-top">
+            <div class="navbar-inner">
+                <div class="container">
+                    <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </a>
+                    <a class="brand" href="/"><img src="/img/logo.png" alt="" style="width: 150px;"/></a>
+                    <div class="nav-collapse collapse">
+                        <ul class="nav">
+                            <li>
+                                <a href="/">
+                                    <i class="icon-dashboard"></i> 
+                                    <br> Visão Geral                             
+                                </a>
+                            </li>
+
+                            <li>
+                                <a href="/clientes">
+                                    <i class="icon-user"></i> 
+                                    <br> Clientes
+                                </a>
+                            </li>
+
+                            <li>
+                                <a href="/tarefas">
+                                    <i class="icon-tags"></i> 
+                                    <br> Tarefas
+                                </a>
+                            </li>
+                        </ul>
+
+                        <ul class="nav pull-right">
+                            <li><a href="/index/configuracoes"><i class="icon-cog"></i> <br> Configurações</a></li>
+                            <li><a href="#" target="_blank"><i class="icon-question-sign"></i> <br> Ajuda</a></li>
+                            <li class="divider-vertical"></li>
+                            <li><a href="/auth/logout"><i class="icon-signout"></i> <br> Sair</a></li>
+                        </ul>
+                    </div><!--/.nav-collapse -->
+                </div>
+            </div>
+        </div>
+
+        <div style="margin-top: 100px;" class="visible-desktop"></div>
+
+        <div class="container">
+            <?php echo $this->flashMessenger(); ?>
+
+            <?php echo $this->layout()->content; ?>
+
+            <br/>
+            <footer>
+                <hr>
+                © CRM- Departamento de TI - 2014
+            </footer>
+        </div>
+    </body>
+</html>

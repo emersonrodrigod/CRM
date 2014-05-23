@@ -1,0 +1,99 @@
+<h2><i class="icon-cog"></i> Configurações</h2>
+
+<hr>
+
+<div class="row-fluid">
+    <div class="span3">
+        <div class="well" style="max-width: 340px; padding: 8px 0;">
+            <ul class="nav nav-list">
+                <li class="nav-header"><i class="icon-cogs"></i> Preferências</li>
+                <li class="active">
+                    <a href="/index/configuracoes">Meus Dados</a>
+                </li>
+                <li>
+                    <a href="/empresas">Empresas / Departamentos</a>
+                </li> 
+                <li>
+                    <a href="/usuarios">Usuários</a>
+                </li>
+                <li>
+                    <a href="/logacessos">Logs de Acessos</a>
+                </li>
+                <li>
+                    <a href="/auth/senha">Alterar minha senha</a>
+                </li>
+            </ul>    
+        </div>  
+    </div>
+
+    <div class="span9">
+
+        <form method="post" class="form-horizontal" id="perfil">
+
+            <div class="well">
+
+                <h4>Informações do Usuário</h4>
+                <hr>
+
+                <div class="control-group">
+                    <label class="control-label">
+                        <label for="nome">Nome Completo</label>
+                    </label>
+
+                    <div class="controls">
+                        <input type="text" name="nome" class="input-xlarge" value="<?php echo $this->dados->nome; ?>">                  
+                    </div>
+                </div>
+
+                <div class="control-group">
+                    <label class="control-label">
+                        <label for="email">E-mail</label>
+                    </label>
+
+                    <div class="controls">
+                        <input type="email" name="email" class="input-xlarge" value="<?php echo $this->dados->email; ?>">                  
+                    </div>
+                </div>
+
+                <hr>
+
+                <div class="control-group">
+                    <label class="control-label">Telefones</label>
+                    <div class="controls">
+                        <input type="text" name="telefone" class="input-medium tel" placeholder="Telefone" data-toggle="tooltip" title="Telefone" value="<?php echo $this->dados->telefone; ?>">          
+                        <input type="text" name="ramal" class="input-small" placeholder="ramal" data-toggle="tooltip" title="ramal" value="<?php echo $this->dados->ramal; ?>">
+                    </div>
+                </div>    
+
+                <hr>
+
+                <div class="form-actions">
+                    <input type="submit" id="submitbutton" class="btn btn-success" value="Salvar">        
+                </div>
+
+        </form>
+        <script type="text/javascript">
+            $('#perfil').validate({
+                onkeyup: true,
+                rules: {
+                    email: {required: true, email: true},
+                    nome: {required: true}
+                }
+            });
+        </script>  
+
+
+        <!-- Script para estados e cidades 
+        <script type="text/javascript">
+                            cidadesEstados = new dgCidadesEstados({
+                                cidade: $('input[name=cidade]').get(0),
+                                estado: $('input[name=uf]').get(0),
+                                estadoVal: '',
+                                cidadeVal: '',
+                                change: true
+                            });
+        </script>  
+
+        -->
+    </div>
+</div>
