@@ -3,7 +3,7 @@
 class Cliente extends Zend_Db_Table_Abstract {
 
     protected $_name = 'cliente';
-    protected $_dependentTables = array('PrivacidadeHistorico');
+    protected $_dependentTables = array('PrivacidadeHistorico','Historico');
     protected $_referenceMap = array(
         'Reponsavel' => array(
             'refTableClass' => 'Usuario',
