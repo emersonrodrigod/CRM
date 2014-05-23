@@ -16,4 +16,12 @@ class Historico extends Zend_Db_Table_Abstract {
         )
     );
 
+    public function gravar(array $dados, $id = null) {
+        if ($id == null) {
+            return $this->insert($dados);
+        } else {
+            return $this->update($dados, "id = {$id}");
+        }
+    }
+
 }

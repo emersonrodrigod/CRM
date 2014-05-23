@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Máquina: localhost
--- Data de Criação: 23-Maio-2014 às 12:58
+-- Data de Criação: 23-Maio-2014 às 17:52
 -- Versão do servidor: 5.6.12-log
 -- versão do PHP: 5.4.12
 
@@ -33,7 +33,7 @@ CREATE TABLE IF NOT EXISTS `categoria` (
   `nome` varchar(255) NOT NULL,
   `ativo` int(11) NOT NULL DEFAULT '1',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=2 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=3 ;
 
 -- --------------------------------------------------------
 
@@ -90,6 +90,24 @@ CREATE TABLE IF NOT EXISTS `empresa` (
 -- --------------------------------------------------------
 
 --
+-- Estrutura da tabela `historico`
+--
+
+CREATE TABLE IF NOT EXISTS `historico` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `id_cliente` int(11) NOT NULL,
+  `id_usuario` int(11) NOT NULL,
+  `texto` text NOT NULL,
+  `quando` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `tarefa` int(11) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`id`),
+  KEY `id_cliente` (`id_cliente`),
+  KEY `id_usuario` (`id_usuario`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=7 ;
+
+-- --------------------------------------------------------
+
+--
 -- Estrutura da tabela `privacidade_historico`
 --
 
@@ -141,6 +159,13 @@ ALTER TABLE `cliente`
 --
 ALTER TABLE `departamento`
   ADD CONSTRAINT `fk_departamento_empresa` FOREIGN KEY (`id_empresa`) REFERENCES `empresa` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+
+--
+-- Limitadores para a tabela `historico`
+--
+ALTER TABLE `historico`
+  ADD CONSTRAINT `historico_ibfk_1` FOREIGN KEY (`id_cliente`) REFERENCES `cliente` (`id`),
+  ADD CONSTRAINT `historico_ibfk_2` FOREIGN KEY (`id_usuario`) REFERENCES `usuario` (`id`);
 
 --
 -- Limitadores para a tabela `usuario`

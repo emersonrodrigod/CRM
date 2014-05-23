@@ -64,7 +64,30 @@ class ClientesController extends Zend_Controller_Action {
     }
 
     public function historicoAction() {
-        
+        $cliente = new Cliente();
+        $atual = $cliente->find($this->_getParam('id'))->current();
+        $this->view->cliente = $atual;
+
+        $storage = new Zend_Auth_Storage_Session("usuario");
+        $this->view->idUsuario = $storage->read()->id;
+    }
+
+    public function gravaHistoricoAction() {
+        $this->_helper->layout()->disableLayout();
+        $this->getHelper('viewRenderer')->setNoRender();
+
+        if ($this->_request->isPost()) {
+            $historico = new Historico();
+            $dados = $this->_request->getPost();
+
+            try {
+                $historico->gravar($dados);
+                $this->_helper->flashMessenger(array('success' => 'Histórico gravado com sucesso!'));
+                $this->_redirect('/clientes/historico/id/' . $dados['id_cliente']);
+            } catch (Exception $ex) {
+                $this->_helper->flashMessenger(array('error' => 'Desculpe, ocorreu um erro: ' . $ex->getMessage()));
+            }
+        }
     }
 
     public function importarAction() {
