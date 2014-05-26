@@ -2,6 +2,9 @@
 <project-private xmlns="http://www.netbeans.org/ns/project-private/1">
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
-        <group/>
+        <group>
+            <file>file:/D:/Projetos/CRM/public/css/app.css</file>
+            <file>file:/D:/Projetos/CRM/application/views/scripts/clientes/historico.phtml</file>
+        </group>
     </open-files>
 </project-private>

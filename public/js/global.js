@@ -129,6 +129,7 @@ $(function() {
     $('.cnpj').inputmask("99.999.999/9999-99", {"placeholder": ""});
     $('.tel').inputmask({mask: "(99) 9999-9999 "});
     $('.datepicker').inputmask({mask: "99/99/9999"});
+    $('.hora').inputmask({mask: "99:99"});
 
     /**
      * Datepicker
@@ -139,13 +140,13 @@ $(function() {
         viewMode: 2
     })
             .on('focus', function() {
-        if (isTouchDevice()) {
-            $(this).blur();
-        }
-    })
+                if (isTouchDevice()) {
+                    $(this).blur();
+                }
+            })
             .on('change', function() {
-        $('.datepicker').datepicker('hide');
-    });
+                $('.datepicker').datepicker('hide');
+            });
 
     $('*[data-toggle=tooltip]').tooltip({
         trigger: 'focus',

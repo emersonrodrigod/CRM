@@ -70,6 +70,9 @@ class ClientesController extends Zend_Controller_Action {
 
         $storage = new Zend_Auth_Storage_Session("usuario");
         $this->view->idUsuario = $storage->read()->id;
+
+        $usuario = new Usuario();
+        $this->view->usuarios = $usuario->fetchAll('ativo = 1', 'nome asc');
     }
 
     public function gravaHistoricoAction() {
@@ -80,8 +83,35 @@ class ClientesController extends Zend_Controller_Action {
             $historico = new Historico();
             $dados = $this->_request->getPost();
 
+            if ($dados['dtAgendamento'] != '') {
+                $dados['tarefa'] = 1;
+            }
+
+            $dadosTarefa = array(
+                'dtTarefa' => Util::dataMysql($dados['dtAgendamento']),
+                'horaTarefa' => $dados['horaAgendamento'],
+                'texto' => $dados['texto'],
+                'id_usuario' => $dados['id_usuario'],
+                'id_cliente' => $dados['id_cliente'],
+            );
+
+            $usuariosTarefa = $dados['usuario'];
+
+            unset($dados['dtAgendamento']);
+            unset($dados['horaAgendamento']);
+            unset($dados['usuario']);
+
+
             try {
-                $historico->gravar($dados);
+
+                if ($idHistorico = $historico->gravar($dados)) {
+                    $dadosTarefa['id_historico'] = $idHistorico;
+                    if ($dadosTarefa['dtTarefa'] != '') {
+                        $tarefa = new Tarefa();
+                        $tarefa->adicionar($dadosTarefa, $usuariosTarefa);
+                    }
+                }
+
                 $this->_helper->flashMessenger(array('success' => 'Histórico gravado com sucesso!'));
                 $this->_redirect('/clientes/historico/id/' . $dados['id_cliente']);
             } catch (Exception $ex) {

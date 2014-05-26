@@ -38,16 +38,21 @@
             <div id="setDtAgen" style="display: none;">
                 <a href="javascript:void(0)" class="btnFechar" id="btnFechar" title="Cancelar agendamento"></a>
                 <label>Tarefa para quando?</label>
-                <input type="text" name="dtAgendamento" id="formDtAgendamento" class="text focus hasDatepicker">às <input type="text" name="horaAgendamento" id="formHoraAgendamento" class="text w80" value="" autocomplete="off">
+                <input type="text" name="dtAgendamento" id="formDtAgendamento" class="text datepicker" />
+                às &nbsp; 
+                <input type="text" name="horaAgendamento" id="formHoraAgendamento" class="text hora" />
 
                 <label>A quem se destina?</label>
 
                 <ul class="ulSelUsuarios">
-                    <li>
-                        <label>
-                            <input type="checkbox" name="usuario[]" value="me" class="checkbox" checked="checked"> A mim<em></em>
-                        </label>
-                    </li>
+                    <?php foreach ($this->usuarios as $usuario) : ?>
+                        <li>
+                            <label>
+                                <input type="checkbox" required minlength="1" name="usuario[]" value="<?php echo $usuario->id; ?>" class="checkbox" <?php echo ($this->idUsuario == $usuario->id ? 'checked="checked"' : ''); ?> /> 
+                                <?php echo ($this->idUsuario == $usuario->id ? 'A mim' : $usuario->nome); ?><em></em>
+                            </label>
+                        </li>
+                    <?php endforeach; ?>
                 </ul><!--ulSelUsuarios-->
 
                 <div class="clear"></div>
@@ -57,7 +62,7 @@
             <div id="setDocsImgs" style="display: none;">
                 <ul>
                     <li class="liImg">
-                        <input class="file" title="" name="arquivo[]" type="file">
+                        <input class="file" name="arquivo[]" type="file" />
                         <a href="javascript:void(0);" class="btnExcluir">
                             <img src="/img/icone-btn-fechar-cinza.gif" alt="Excluir">
                         </a>
@@ -72,7 +77,7 @@
         <input type="submit" value="Gravar comentário" class="btn btn-info btn-mini pull-right" id="btnComentar">
 
         <a href="javascript:void(0);" id="lnkAdicionarArquivosImagens" title="Adicionar arquivos">Adicionar arquivos</a> ou,
-        <a href="javascript:void(0);" id="lnkDefinirAgendamento" title="definir agendamento">definir agendamento</a>
+        <a href="javascript:void(0);" id="lnkDefinirAgendamento" title="Definir como tarefa">Definir como tarefa</a>
 
         <div class="clear"></div>
     </form>
@@ -86,7 +91,13 @@
                 <p><?php echo $historico->texto; ?></p>
 
                 <span class="bottom c999">
-                    <span rel="tooltip" class="data ml20"><?php echo date("d/m/Y", strtotime($historico->quando)); ?> às <?php echo date("H:i:s", strtotime($historico->quando)); ?></span>
+                    <span rel="tooltip" class="data ml20">
+                        <?php echo date("d/m/Y", strtotime($historico->quando)); ?> às <?php echo date("H:i:s", strtotime($historico->quando)); ?>
+                        <?php if ($historico->tarefa == 1) : ?>
+                        , <a href="/tarefa/id/<?php echo $historico->findDependentRowset('Tarefa')[0]->id; ?>">tarefa agendada para <?php echo date("d/m/Y",strtotime($historico->findDependentRowset('Tarefa')[0]->dtTarefa)); ?></a>
+                        <?php endif; ?>
+
+                    </span>
                 </span>
 
                 <ul class="menu">
@@ -103,70 +114,77 @@
 </div>
 
 <script type="text/javascript">
-    $('#formComentar').validate({
-        rules: {
-            texto: {required: true, minLenght: 3}
-        }
-    });
+    $(document).ready(function() {
+        $('#formComentar').validate({
+            rules: {
+                dtAgendamento: {required: true},
+                horaAgendamento: {required: true},
+                texto: {required: true},
+                usuario: {required: true}
+            }
+        });
 
-    var getHtmlNovaImagem = function() {
-        return '<li class="liImg">' +
-                '<input class="file" title="" name="arquivo[]" type="file">' +
-                '<a href="javascript:void(0);" class="btnExcluir">' +
-                '<img src="/img/icone-btn-fechar-cinza.gif" alt="Excluir">' +
-                '</a></li>';
-    };
+        var getHtmlNovaImagem = function() {
+            return '<li class="liImg">' +
+                    '<input class="file" title="" name="arquivo[]" type="file">' +
+                    '<a href="javascript:void(0);" class="btnExcluir">' +
+                    '<img src="/img/icone-btn-fechar-cinza.gif" alt="Excluir">' +
+                    '</a></li>';
+        };
 
-    $("#setDocsImgs #lnkAdicionarNovoArquivo").click(function() {
-        $(this).parent().before(getHtmlNovaImagem());
-    });
+        $("#setDocsImgs #lnkAdicionarNovoArquivo").click(function() {
+            $(this).parent().before(getHtmlNovaImagem());
+        });
 
-    $("body").on('click', '.btnExcluir', function() {
-        $(this).parent().remove();
-    });
+        $("body").on('click', '.btnExcluir', function() {
+            $(this).parent().remove();
+        });
 
-    $("#lnkDefinirAgendamento").click(function() {
-        if ($("#setDtAgen").is(":visible"))
+        $("#lnkDefinirAgendamento").click(function() {
+            if ($("#setDtAgen").is(":visible"))
+                cancelarAgendamento();
+            else {
+                mostraAgendamento();
+            }
+        });
+
+        $("#btnFechar").click(function() {
             cancelarAgendamento();
-        else
-            mostraAgendamento();
+        });
+
+        $("#lnkAdicionarArquivosImagens").click(function() {
+            if ($("#setDocsImgs").is(":visible")) {
+                $("#setDocsImgs").slideUp('fast', function() {
+                    cancelarArquivos();
+                });
+            } else {
+                mostrarArquivos();
+            }
+        });
+
+        var mostraAgendamento = function() {
+            $("#setDtAgen").slideDown('fast');
+            $("#lnkDefinirAgendamento").attr('title', 'cancelar tarefa').html("cancelar tarefa");
+            $(".ulSelUsuarios").find("li input[type=checkbox]:first").attr('checked', true);
+        };
+
+        var cancelarAgendamento = function() {
+            $(".ulSelUsuarios").find("li input[type=checkbox]").attr('checked', false);
+            $("#setDtAgen").hide();
+            $("#setDtAgen").slideUp('fast');
+            $("#lnkDefinirAgendamento").attr('title', 'Definir como tarefa').html("Definir como tarefa");
+            $("#formDtAgendamento").val('');
+            $("#formHoraAgendamento").val('');
+        };
+
+        var mostrarArquivos = function() {
+            $("#setDocsImgs").slideDown('fast');
+            $("#lnkAdicionarArquivosImagens").attr('title', 'Cancelar arquivos').html("Cancelar arquivos");
+        };
+
+        var cancelarArquivos = function() {
+            $("#setDocsImgs li.liImg, #setDocsImgs li.liDoc").remove();
+            $("#lnkAdicionarArquivosImagens").attr('title', 'Adicionar arquivos').html("Adicionar Arquivos");
+        };
     });
-
-    $("#btnFechar").click(function() {
-        cancelarAgendamento();
-    });
-
-    $("#lnkAdicionarArquivosImagens").click(function() {
-        if ($("#setDocsImgs").is(":visible")) {
-            $("#setDocsImgs").slideUp('fast', function() {
-                cancelarArquivos();
-            });
-        } else {
-            mostrarArquivos();
-        }
-    });
-
-
-    var mostraAgendamento = function() {
-        $("#setDtAgen").slideDown('fast');
-        $("#lnkDefinirAgendamento").attr('title', 'cancelar agendamento').html("cancelar agendamento");
-        $(".ulSelUsuarios").find("li input[type=checkbox]:first").attr('checked', true);
-    };
-
-    var cancelarAgendamento = function() {
-        $(".ulSelUsuarios").find("li input[type=checkbox]").attr('checked', false);
-        $("#setDtAgen").hide();
-        $("#setDtAgen").slideUp('fast');
-        $("#lnkDefinirAgendamento").attr('title', 'definir agendamento').html("definir agendamento");
-    };
-
-    var mostrarArquivos = function() {
-        $("#setDocsImgs").slideDown('fast');
-        $("#lnkAdicionarArquivosImagens").attr('title', 'Cancelar arquivos').html("Cancelar arquivos");
-    };
-
-    var cancelarArquivos = function() {
-        $("#setDocsImgs li.liImg, #setDocsImgs li.liDoc").remove();
-        $("#lnkAdicionarArquivosImagens").attr('title', 'Adicionar arquivos').html("Adicionar Arquivos");
-    };
 </script>  
