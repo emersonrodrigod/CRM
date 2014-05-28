@@ -927,3 +927,18 @@ ul.ulSelUsuarios li.buscando { color:#999; background:#fff url(../imagens/loader
 ul.ulSelUsuarios li input.checkbox { height:14px; width:14px; margin-right:5px; }
 ul.ulSelUsuarios li label { padding:3px; font:normal 12px Arial!important; margin:0 0 0 0!important; padding:2px!important; cursor:pointer; display:block; }
 ul.ulSelUsuarios li em { margin-left:5px; font:11px Arial; }
+
+
+
+#visualizacoes { position:absolute; top:13px; right:20px; }
+
+#canvasHeader #headerLoader { position:absolute; top:20px; left:105px; display:none; }
+
+#conteudoCanvas #opcoesTarefa { display: block; margin:11px 0px 30px 0px; padding:0px; float:right; list-style: none; }
+#conteudoCanvas #opcoesTarefa li { float:left; font:bold 12px Arial; color:#aaa; }
+#conteudoCanvas #opcoesTarefa li strong { font:bold 14px Arial; letter-spacing:-1px; margin-right:10px; color:#333; }
+#conteudoCanvas #opcoesTarefa li a { font:bold 12px Arial; }
+#conteudoCanvas #opcoesTarefa li a.selected { color:#aaa; }
+#conteudoCanvas #opcoesTarefa li.spacer { margin:0px 8px; font:normal 12px Arial; }
+
+#conteudoCanvas #periodo { position:relative; z-index:0; float:right; }

@@ -30,6 +30,14 @@ class Tarefa extends Zend_Db_Table_Abstract {
         }
     }
 
+    public function getAll($idUsuario) {
+        $usuario = new Usuario();
+        $usuarioAtual = $usuario->find($idUsuario)->current();
+        $tarefas = $usuarioAtual->findManyToManyRowset('Tarefa', 'TarefaUsuario');
+
+        return $tarefas;
+    }
+
     public function adicionarUsuarioTarefa($idUsuario, $idTarefa) {
         $TarefaUsuario = new TarefaUsuario();
 
@@ -39,6 +47,26 @@ class Tarefa extends Zend_Db_Table_Abstract {
         );
 
         $TarefaUsuario->insert($dados);
+    }
+
+    public function verificaPermissao($idUsuario, $idTarefa) {
+        $tarefa = $this->find($idTarefa)->current();
+        $usuarios = $tarefa->findDependentRowset('TarefaUsuario');
+
+        foreach ($usuarios as $u) {
+            if ($u->id == $idUsuario) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    public function getSituacao($situacao) {
+        switch ($situacao) {
+            case 'PEN' : return 'Pendente';
+            case 'CON' : return 'Concluída';
+        }
     }
 
 }

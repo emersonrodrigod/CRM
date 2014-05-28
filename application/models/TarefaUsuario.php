@@ -12,7 +12,7 @@ class TarefaUsuario extends Zend_Db_Table_Abstract {
         'Usuario' => array(
             'refTableClass' => 'Usuario',
             'refColumns' => array('id'),
-            'columns' => array('id_Usuario')
+            'columns' => array('id_usuario')
         )
     );
 

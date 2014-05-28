@@ -8,6 +8,8 @@
         <r0005 resource="default:empresas" />
         <r0006 resource="default:ajax" />
         <r0007 resource="default:clientes" />
+        <r0008 resource="default:tarefas" />
+        <r0009 resource="default:error" />
     </resources>
     <roles>
         <r0001 role="guest" />
@@ -24,5 +26,7 @@
         <a0007 role="admin" resource="default:empresas" />
         <a0008 role="admin" resource="default:ajax" />
         <a0009 role="admin" resource="default:clientes" />
+        <a0010 role="admin" resource="default:tarefas" />
+        <a0011 role="guest" resource="default:error" />
     </allow>
 </acl>

@@ -1,0 +1,51 @@
+<div class="row-fluid">
+    <div class="span12">
+        <h2><i class="icon-tags"></i> Tarefas</h2>
+
+        <hr>
+
+        <p class="pull-left"><a href="/tarefas/novo" class="btn btn-primary"><i class="icon-tags"></i> &nbsp; Nova Tarefa</a></p>
+
+        <br/>
+
+        <div class="row-fluid" id="conteudoCanvas">
+
+            <ul id="opcoesTarefa">
+                <li><a href="javascript:void(0);" class="opcaoTarefa selected" rel="0">Tarefas pendentes</a></li>
+                <li class="spacer">|</li>
+                <li><a href="javascript:void(0);" class="opcaoTarefa" rel="1">Tarefas finalizadas</a></li>
+            </ul>
+
+            <div class="clearfix"></div>
+
+            <ul class="canvasListagem" id="listComentarios">
+
+                <?php foreach ($this->tarefas as $tarefa) : ?>
+                    <li class="item pb10 comentsPg0">
+                        <span class="imgAvatar imgUsuario"></span><strong><?php echo $tarefa->findParentRow('Usuario')->nome; ?></strong>
+
+                        <p><?php echo $tarefa->texto; ?></p>
+
+                        <span class="bottom c999">
+                            <span rel="tooltip" class="data ml20">
+                                tarefa agendada para <?php echo date("d/m/Y", strtotime($tarefa->dtTarefa)); ?>
+                                às  <?php echo date("H:i", strtotime($tarefa->horaTarefa)); ?>
+                                | 
+                                Situação: <?php echo $this->tarefa->getSituacao($tarefa->situacao); ?>
+                                |
+                                Cliente relacionado : <?php echo ($tarefa->id_cliente == null ? 'Nenhum' : $tarefa->findParentRow('Cliente')->nome); ?>
+                            </span>
+                        </span>
+
+                        <ul class="menu">
+                            <li><a href="/tarefas/visualizar/id/<?php echo $tarefa->id; ?>" class="lnkEditarComentario cboxElement">Visualizar</a></li>
+                        </ul>
+
+                        <div class="clear"></div>
+                    </li>
+
+                <?php endforeach; ?>
+            </ul>
+        </div>
+    </div>
+</div>
