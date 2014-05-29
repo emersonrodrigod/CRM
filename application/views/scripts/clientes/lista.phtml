@@ -2,33 +2,42 @@
 
 <div id="conteudoCanvas">
     <ul class="canvasListagem">
-        <?php foreach ($this->clientes as $cliente): ?>
-            <li class="item pb10 ">
-                <a href="/clientes/historico/id/<?php echo $cliente->id; ?>" class="imgAvatar imgEmpresa"></a>
-                <a href="/clientes/historico/id/<?php echo $cliente->id; ?>" class="tLnk"><strong><?php echo $cliente->nome; ?> (<?php echo $cliente->estado; ?>)</strong></a>
+        
+        <?php if ($this->clientes->count() == 0) : ?>
+            <div class="alert alert-info">
+                <strong>Nenhum registro encontrado com os dados da pesquisa!</strong>
+            </div>
+        <?php endif; ?>
+        
+        <?php if (isset($this->clientes)) : ?>
+            <?php foreach ($this->clientes as $cliente): ?>
+                <li class="item pb10 ">
+                    <a href="/clientes/historico/id/<?php echo $cliente->id; ?>" class="imgAvatar imgEmpresa"></a>
+                    <a href="/clientes/historico/id/<?php echo $cliente->id; ?>" class="tLnk"><strong><?php echo $cliente->nome; ?> (<?php echo $cliente->estado; ?>)</strong></a>
 
-                <span class="right"><em>0 histórico(s) cadastrado(s)</em></span>
+                    <span class="right"><em>0 histórico(s) cadastrado(s)</em></span>
 
-                <ul class="menu">
-                    <li><a href="/clientes/historico/id/<?php echo $cliente->id; ?>" title="Ver histórico de relacionamento">Ver histórico</a></li>
-                    <!--<li class="spacer">|</li>
-                    <li><a href="negocios.php?em=657309" title="Ver negócios desta empresa">Ver negócios</a> (1)</li>-->
-                    <li class="spacer">|</li>
-                    <li><a href="/clientes/pessoas/id/<?php echo $cliente->id; ?>" title="Ver pessoas deste cliente">Ver pessoas</a> (0)</li>
-                    <li class="spacer">|</li>
-                    <li><a href="/clientes/editar/id/<?php echo $cliente->id; ?>" title="Editar este cliente">Editar</a></li>
-                </ul>
-                <!--menu-->
+                    <ul class="menu">
+                        <li><a href="/clientes/historico/id/<?php echo $cliente->id; ?>" title="Ver histórico de relacionamento">Ver histórico</a></li>
+                        <!--<li class="spacer">|</li>
+                        <li><a href="negocios.php?em=657309" title="Ver negócios desta empresa">Ver negócios</a> (1)</li>-->
+                        <li class="spacer">|</li>
+                        <li><a href="/clientes/pessoas/id/<?php echo $cliente->id; ?>" title="Ver pessoas deste cliente">Ver pessoas</a> (0)</li>
+                        <li class="spacer">|</li>
+                        <li><a href="/clientes/editar/id/<?php echo $cliente->id; ?>" title="Editar este cliente">Editar</a></li>
+                    </ul>
+                    <!--menu-->
 
-                <ul class="listaInfo">
-                    <li><span>Categoria:</span><?php echo ($cliente->id_categoria == null ? 'Não definido' : $cliente->findParentRow('Categoria')->nome); ?></li>
-                    <li><span>Telefone:</span> <?php echo ($cliente->telefone == null ? 'Não definido' : $cliente->telefone); ?></li>
-                </ul>
-                <!--listaImagens-->
+                    <ul class="listaInfo">
+                        <li><span>Categoria:</span><?php echo ($cliente->id_categoria == null ? 'Não definido' : $cliente->findParentRow('Categoria')->nome); ?></li>
+                        <li><span>Telefone:</span> <?php echo ($cliente->telefone == null ? 'Não definido' : $cliente->telefone); ?></li>
+                    </ul>
+                    <!--listaImagens-->
 
-                <div class="clear"></div>
-            </li>
+                    <div class="clear"></div>
+                </li>
 
-        <?php endforeach; ?>
+            <?php endforeach; ?>
+        <?php endif; ?>
     </ul>  
 </div>

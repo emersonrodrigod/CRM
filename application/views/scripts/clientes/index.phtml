@@ -109,6 +109,13 @@
 
 
         <script type="text/javascript">
+            $('#carregando').show();
+
+            $("#lista").load('/clientes/lista', function() {
+                $('#carregando').hide();
+            });
+
+
             $("#mostraFiltro").click(function() {
                 $("#filtros").toggle("slow");
             });
@@ -139,6 +146,7 @@
                 });
             });
 
+            //$("#filtros").hide();
 <?php if (isset($this->clientes)) : ?>
                 $("#mostraFiltro").show();
                 $("#filtros").hide();

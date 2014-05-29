@@ -9,7 +9,16 @@ class ClientesController extends Zend_Controller_Action {
     public function listaAction() {
         $this->_helper->layout()->disableLayout();
 
+        $sessionPesquisa = new Zend_Session_Namespace('pesquisa');
+
+        if (isset($sessionPesquisa->parametros)) {
+            $cliente = new Cliente();
+            $this->view->clientes = $cliente->filtrar($sessionPesquisa->parametros);
+        }
+
         if ($this->_request->isPost()) {
+            $pesquisa = new Zend_Session_Namespace('pesquisa');
+            $pesquisa->parametros = $this->_request->getPost();
             $cliente = new Cliente();
             $this->view->clientes = $cliente->filtrar($this->_request->getPost());
         }
