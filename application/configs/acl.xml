@@ -10,6 +10,7 @@
         <r0007 resource="default:clientes" />
         <r0008 resource="default:tarefas" />
         <r0009 resource="default:error" />
+        <r0010 resource="default:application" />
     </resources>
     <roles>
         <r0001 role="guest" />
@@ -28,5 +29,6 @@
         <a0009 role="admin" resource="default:clientes" />
         <a0010 role="admin" resource="default:tarefas" />
         <a0011 role="guest" resource="default:error" />
+        <a0012 role="admin" resource="default:application" />
     </allow>
 </acl>
