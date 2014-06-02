@@ -1,14 +1,14 @@
 
-
+<?php $conta = (isset($this->clientes) ? $this->clientes->count() : 0); ?>
 <div id="conteudoCanvas">
     <ul class="canvasListagem">
-        
-        <?php if ($this->clientes->count() == 0) : ?>
+
+        <?php if ($conta == 0) : ?>
             <div class="alert alert-info">
                 <strong>Nenhum registro encontrado com os dados da pesquisa!</strong>
             </div>
         <?php endif; ?>
-        
+
         <?php if (isset($this->clientes)) : ?>
             <?php foreach ($this->clientes as $cliente): ?>
                 <li class="item pb10 ">
