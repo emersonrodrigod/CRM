@@ -24,7 +24,7 @@
                     <li class="item pb10 comentsPg0">
                         <span class="imgAvatar imgUsuario"></span><strong><?php echo $tarefa->findParentRow('Usuario')->nome; ?></strong>
 
-                        <p><?php echo $tarefa->texto; ?></p>
+                        <p>#<?php echo str_pad($tarefa->id, 6, '0', STR_PAD_LEFT); ?> <br/> <?php echo $tarefa->texto; ?></p>
 
                         <span class="bottom c999">
                             <span rel="tooltip" class="data ml20">

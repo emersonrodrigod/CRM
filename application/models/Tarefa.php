@@ -54,7 +54,7 @@ class Tarefa extends Zend_Db_Table_Abstract {
         $usuarios = $tarefa->findDependentRowset('TarefaUsuario');
 
         foreach ($usuarios as $u) {
-            if ($u->id == $idUsuario) {
+            if ($u->id_usuario == $idUsuario) {
                 return true;
             }
         }
