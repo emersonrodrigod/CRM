@@ -12,7 +12,11 @@ class TarefasController extends Zend_Controller_Action {
 
     public function indexAction() {
         $tarefa = new Tarefa();
-        $this->view->tarefas = $tarefa->getAll($this->idUsuario);
+        $this->view->tarefas = $tarefa->getAll($this->idUsuario,'PEN');
+        
+        if($this->_getParam('situacao') != null){
+            $this->view->tarefas = $tarefa->getAll($this->idUsuario,$this->_getParam('situacao'));
+        }
     }
 
     public function visualizarAction() {

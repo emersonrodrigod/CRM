@@ -30,11 +30,13 @@ class Tarefa extends Zend_Db_Table_Abstract {
         }
     }
 
-    public function getAll($idUsuario) {
+    public function getAll($idUsuario, $situacao) {
         $usuario = new Usuario();
-        $usuarioAtual = $usuario->find($idUsuario)->current();
-        $tarefas = $usuarioAtual->findManyToManyRowset('Tarefa', 'TarefaUsuario');
 
+        $select = $this->select()->where("situacao = '$situacao'")->order("id desc");
+
+        $usuarioAtual = $usuario->find($idUsuario)->current();
+        $tarefas = $usuarioAtual->findManyToManyRowset('Tarefa', 'TarefaUsuario', null, null, $select);
         return $tarefas;
     }
 
