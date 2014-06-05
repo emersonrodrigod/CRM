@@ -3,7 +3,7 @@
 class Historico extends Zend_Db_Table_Abstract {
 
     protected $_name = 'historico';
-    protected $_dependentTables = array('Tarefa');
+    protected $_dependentTables = array('Tarefa','Anexo');
     protected $_referenceMap = array(
         'Cliente' => array(
             'refTableClass' => 'Cliente',

@@ -3,7 +3,7 @@
 class Tarefa extends Zend_Db_Table_Abstract {
 
     protected $_name = 'tarefa';
-    protected $_dependentTables = array('TarefaUsuario');
+    protected $_dependentTables = array('TarefaUsuario','Anexo');
     protected $_referenceMap = array(
         'Cliente' => array(
             'refTableClass' => 'Cliente',

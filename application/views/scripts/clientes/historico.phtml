@@ -62,7 +62,7 @@
             <div id="setDocsImgs" style="display: none;">
                 <ul>
                     <li class="liImg">
-                        <input class="file" name="arquivo[]" type="file" />
+                        <input class="file" name="arquivo[]" type="file" required />
                         <a href="javascript:void(0);" class="btnExcluir">
                             <img src="/img/icone-btn-fechar-cinza.gif" alt="Excluir">
                         </a>
@@ -90,11 +90,19 @@
 
                 <p><?php echo $historico->texto; ?></p>
 
+                <ul class="listaArquivos">
+                    <?php foreach ($historico->findDependentRowset('Anexo') as $anexo) : ?>
+                        <li>
+                            <a href="/<?php echo $anexo->caminho; ?>" target="_blank"><?php echo $anexo->nome; ?></a>
+                        </li>
+                    <?php endforeach; ?>
+                </ul>
+
                 <span class="bottom c999">
                     <span rel="tooltip" class="data ml20">
                         <?php echo date("d/m/Y", strtotime($historico->quando)); ?> às <?php echo date("H:i:s", strtotime($historico->quando)); ?>
                         <?php if ($historico->tarefa == 1) : ?>
-                        , <a href="/tarefas/visualizar/id/<?php echo $historico->findDependentRowset('Tarefa')[0]->id; ?>">tarefa agendada para <?php echo date("d/m/Y",strtotime($historico->findDependentRowset('Tarefa')[0]->dtTarefa)); ?></a>
+                            , <a href="/tarefas/visualizar/id/<?php echo $historico->findDependentRowset('Tarefa')[0]->id; ?>">tarefa agendada para <?php echo date("d/m/Y", strtotime($historico->findDependentRowset('Tarefa')[0]->dtTarefa)); ?></a>
                         <?php endif; ?>
 
                     </span>
@@ -126,7 +134,7 @@
 
         var getHtmlNovaImagem = function() {
             return '<li class="liImg">' +
-                    '<input class="file" title="" name="arquivo[]" type="file">' +
+                    '<input class="file" title="" name="arquivo[]" type="file" required />' +
                     '<a href="javascript:void(0);" class="btnExcluir">' +
                     '<img src="/img/icone-btn-fechar-cinza.gif" alt="Excluir">' +
                     '</a></li>';

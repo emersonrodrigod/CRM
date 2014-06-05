@@ -121,6 +121,19 @@ class ClientesController extends Zend_Controller_Action {
                     }
                 }
 
+                if ($_FILES['arquivo']['name'] != '') {
+                    $anexo = new Anexo();
+
+                    $dadosAnexo = array(
+                        'id_historico' => $idHistorico,
+                        'id_usuario' => $dados['id_usuario'],
+                        'id_tarefa' => null
+                    );
+
+                    $anexo->adicionar($dadosAnexo);
+                }
+
+
                 $this->_helper->flashMessenger(array('success' => 'Histórico gravado com sucesso!'));
                 $this->_redirect('/clientes/historico/id/' . $dados['id_cliente']);
             } catch (Exception $ex) {

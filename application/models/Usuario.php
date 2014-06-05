@@ -3,7 +3,7 @@
 class Usuario extends Zend_Db_Table_Abstract {
 
     protected $_name = 'usuario';
-    protected $_dependentTables = array('PrivacidadeHistorico','Cliente','Historico','Tarefa','TarefaUsuario','Migration');
+    protected $_dependentTables = array('PrivacidadeHistorico','Cliente','Historico','Tarefa','TarefaUsuario','Migration','Anexo');
     protected $_referenceMap = array(
         'Empresa' => array(
             'refTableClass' => 'Empresa',
