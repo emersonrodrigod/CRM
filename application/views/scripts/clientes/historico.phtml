@@ -109,9 +109,9 @@
                 </span>
 
                 <ul class="menu">
-                    <li><a href="" class="lnkEditarComentario cboxElement">Editar</a></li>
-                    <li class="spacer">|</li>
-                    <li><a href="/clientes/remove-historico/id/<?php echo $historico->id; ?>" class="lnkExcluirComentario" title="Excluir este comentário">Excluir</a></li>
+                    <?php if ($this->idUsuario == $historico->id_usuario) : ?>
+                        <li><a href="/clientes/remove-historico/id/<?php echo $historico->id; ?>/cliente/<?php echo $this->cliente->id; ?>" class="lnkExcluirComentario delete" title="Excluir este comentário">Excluir</a></li>
+                    <?php endif; ?>
                 </ul>
 
                 <div class="clear"></div>

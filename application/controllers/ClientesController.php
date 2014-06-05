@@ -142,6 +142,21 @@ class ClientesController extends Zend_Controller_Action {
         }
     }
 
+    public function removeHistoricoAction() {
+        $this->_helper->layout()->disableLayout();
+        $this->getHelper('viewRenderer')->setNoRender();
+        $historico = new Historico();
+
+        try {
+            $historico->remover($this->_getParam('id'));
+            $this->_helper->flashMessenger(array('success' => 'Histórico removido com sucesso!'));
+            $this->_redirect('/clientes/historico/id/' . $this->_getParam('cliente'));
+        } catch (Zend_Db_Exception $e) {
+            $this->_helper->flashMessenger(array('error' => 'Não é possivel excluir um histórico cujo qual a tarefa contem acompanhamentos. ' . $e->getMessage()));
+            $this->_redirect('/clientes/historico/id/' . $this->_getParam('cliente'));
+        }
+    }
+
     public function importarAction() {
         if ($this->_request->isPost()) {
 
