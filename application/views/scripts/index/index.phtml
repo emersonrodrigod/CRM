@@ -1,0 +1,20 @@
+<div id="calendar"></div>
+
+<script>
+
+    $('#calendar').fullCalendar({
+        header: {
+            left: 'prev,next today',
+            center: 'title',
+            right: 'month,agendaWeek,agendaDay'
+        },
+        defaultDate: '2014-06-12',
+        lang: 'pt-br',
+        buttonIcons: false, // show the prev/next text
+        weekNumbers: true,
+        editable: true,
+        events: '/tarefas/eventos'
+    });
+
+
+</script>

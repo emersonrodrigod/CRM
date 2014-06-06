@@ -32,6 +32,14 @@ class TarefasController extends Zend_Controller_Action {
         $this->view->idUsuario = $this->idUsuario;
     }
 
+    public function eventosAction() {
+        $this->_helper->layout()->disableLayout();
+        $this->getHelper('viewRenderer')->setNoRender();
+
+        $tarefa = new Tarefa();
+        echo $tarefa->getJson($this->idUsuario, 'PEN');
+    }
+
     public function acompanhamentoAction() {
         $this->_helper->layout()->disableLayout();
         $this->getHelper('viewRenderer')->setNoRender();

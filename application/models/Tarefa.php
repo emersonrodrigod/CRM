@@ -40,6 +40,30 @@ class Tarefa extends Zend_Db_Table_Abstract {
         return $tarefas;
     }
 
+    public function getJson($idUsuario, $situacao) {
+        $usuario = new Usuario();
+
+        $toReturn = array();
+
+        $select = $this->select()->where("situacao = '$situacao'")->order("id desc");
+
+        $usuarioAtual = $usuario->find($idUsuario)->current();
+        $tarefas = $usuarioAtual->findManyToManyRowset('Tarefa', 'TarefaUsuario', null, null, $select);
+
+        foreach ($tarefas as $tarefa) {
+            $toReturn[] = array(
+                'id' => $tarefa->id,
+                'title' => $tarefa->texto,
+                'start' => $tarefa->dtTarefa,
+                'url' => '/tarefas/id/' . $tarefa->id
+            );
+        }
+
+        $toReturn = Zend_Json_Encoder::encode($toReturn);
+
+        return $toReturn;
+    }
+
     public function adicionarUsuarioTarefa($idUsuario, $idTarefa) {
         $TarefaUsuario = new TarefaUsuario();
 
