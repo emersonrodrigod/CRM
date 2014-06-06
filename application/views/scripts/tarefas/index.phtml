@@ -11,11 +11,11 @@
         <div class="row-fluid" id="conteudoCanvas">
 
             <ul id="opcoesTarefa">
-                <li><a href="/tarefas" class="opcaoTarefa selected" rel="0">Tarefas pendentes</a></li>
+                <li><a href="/tarefas" class="opcaoTarefa <?php echo ($this->situacao == null ? 'selected' : '') ?>" rel="0">Tarefas pendentes</a></li>
                 <li class="spacer">|</li>
-                <li><a href="/tarefas/index/situacao/CON" class="opcaoTarefa" rel="1">Tarefas finalizadas</a></li>
+                <li><a href="/tarefas/index/situacao/CON" class="opcaoTarefa <?php echo ($this->situacao == 'CON' ? 'selected' : '') ?>" rel="1">Tarefas finalizadas</a></li>
                 <li class="spacer">|</li>
-                <li><a href="/tarefas/index/situacao/CAN" class="opcaoTarefa" rel="1">Tarefas Canceladas</a></li>
+                <li><a href="/tarefas/index/situacao/CAN" class="opcaoTarefa <?php echo ($this->situacao == 'CAN' ? 'selected' : '') ?>" rel="2">Tarefas Canceladas</a></li>
             </ul>
 
             <div class="clearfix"></div>

@@ -15,6 +15,7 @@ class TarefasController extends Zend_Controller_Action {
         $this->view->tarefas = $tarefa->getAll($this->idUsuario, 'PEN');
 
         if ($this->_getParam('situacao') != null) {
+            $this->view->situacao = $this->_getParam('situacao');
             $this->view->tarefas = $tarefa->getAll($this->idUsuario, $this->_getParam('situacao'));
         }
     }
