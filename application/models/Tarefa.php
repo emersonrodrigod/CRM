@@ -3,7 +3,7 @@
 class Tarefa extends Zend_Db_Table_Abstract {
 
     protected $_name = 'tarefa';
-    protected $_dependentTables = array('TarefaUsuario','Anexo');
+    protected $_dependentTables = array('TarefaUsuario', 'Anexo', 'HistoricoTarefa');
     protected $_referenceMap = array(
         'Cliente' => array(
             'refTableClass' => 'Cliente',
@@ -64,10 +64,63 @@ class Tarefa extends Zend_Db_Table_Abstract {
         return false;
     }
 
+    public function adicionaHistorico($dados) {
+        $historico = new HistoricoTarefa();
+        return $historico->insert($dados);
+    }
+
+    public function getHistorico($idTarefa) {
+        $atual = $this->find($idTarefa)->current();
+        $historico = new HistoricoTarefa();
+        $select = $historico->select()->order('id desc');
+        return $atual->findDependentRowset('HistoricoTarefa', null, $select);
+    }
+
+    public function removerHistorico($idHistorico) {
+        $historico = new HistoricoTarefa();
+        $atual = $historico->find($idHistorico)->current();
+        $atual->delete();
+    }
+
+    public function concluir($dados) {
+        $dadosTarefa = array(
+            'situacao' => 'CON',
+            'conclusao' => date("Y-m-d H:i:s")
+        );
+
+        $this->update($dadosTarefa, "id = " . $dados['id_tarefa']);
+
+        $dadosHistorico = array(
+            'texto' => 'Tarefa Concluída',
+            'id_tarefa' => $dados['id_tarefa'],
+            'id_usuario' => $dados['id_usuario']
+        );
+
+        $this->adicionaHistorico($dadosHistorico);
+    }
+
+    public function cancelar($dados) {
+        $dadosTarefa = array(
+            'situacao' => 'CAN',
+            'conclusao' => date("Y-m-d H:i:s")
+        );
+
+        $this->update($dadosTarefa, "id = " . $dados['id_tarefa']);
+
+        $dadosHistorico = array(
+            'texto' => 'Tarefa Cancelada',
+            'id_tarefa' => $dados['id_tarefa'],
+            'id_usuario' => $dados['id_usuario']
+        );
+
+        $this->adicionaHistorico($dadosHistorico);
+    }
+
     public function getSituacao($situacao) {
         switch ($situacao) {
             case 'PEN' : return 'Pendente';
             case 'CON' : return 'Concluída';
+            case 'CAN' : return 'Cancelada';
         }
     }
 

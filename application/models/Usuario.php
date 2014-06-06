@@ -3,7 +3,16 @@
 class Usuario extends Zend_Db_Table_Abstract {
 
     protected $_name = 'usuario';
-    protected $_dependentTables = array('PrivacidadeHistorico','Cliente','Historico','Tarefa','TarefaUsuario','Migration','Anexo');
+    protected $_dependentTables = array(
+        'PrivacidadeHistorico',
+        'Cliente',
+        'Historico',
+        'Tarefa',
+        'TarefaUsuario',
+        'Migration',
+        'Anexo',
+        'HistoricoTarefa'
+    );
     protected $_referenceMap = array(
         'Empresa' => array(
             'refTableClass' => 'Empresa',
@@ -37,8 +46,8 @@ class Usuario extends Zend_Db_Table_Abstract {
 
         return new Zend_Filter_Input(array(), $validadores, $dados);
     }
-    
-    public function getByDepartamento($idDepartamento){
+
+    public function getByDepartamento($idDepartamento) {
         return $this->fetchAll("ativo = 1 and id_departamento = {$idDepartamento}");
     }
 

@@ -36,23 +36,24 @@
 
             <h4>Ações</h4>
 
-            <p>
-                <a href="javascript:void(0);" id="solicitarPosicao" class="btn btn-small btn-primary actions" data-toggle="modal" data-target="#modalAcompanhamento">
-                    <i class="icon-question"></i> &nbsp; Registrar Acompanhamento
-                </a>
-            </p>
+            <?php if ($this->tarefa->situacao == 'PEN') : ?>
+                <p>
+                    <a href="javascript:void(0);" id="solicitarPosicao" class="btn btn-small btn-primary actions" data-toggle="modal" data-target="#modalAcompanhamento">
+                        <i class="icon-question"></i> &nbsp; Acompanhamento
+                    </a>
+                </p>
+                <p>
+                    <a href="javascript:void(0);" class="btn btn-small btn-success actions" data-toggle="modal" data-target="#modalConcluir">
+                        <i class="icon-ok"></i> &nbsp; Concluir Tarefa
+                    </a>
+                </p>
 
-            <p>
-                <a href="javascript:void(0);" class="btn btn-small btn-success actions" data-toggle="modal" data-target="#modalConcluir">
-                    <i class="icon-ok"></i> &nbsp; Concluir Tarefa
-                </a>
-            </p>
-
-            <p>
-                <a href="/solicitacoes/cancela-solicitacao/id/" id="cancelarSolicitacao" class="btn btn-small btn-danger actions">
-                    <i class="icon-remove"></i> &nbsp; Cancelar Tarefa
-                </a>
-            </p>
+                <p>
+                    <a href="javascript:void(0);" id="cancelarSolicitacao" class="btn btn-small btn-danger actions" data-toggle="modal" data-target="#modalCancelar">
+                        <i class="icon-remove"></i> &nbsp; Cancelar Tarefa
+                    </a>
+                </p>
+            <?php endif; ?>
 
             <hr />
 
@@ -64,24 +65,60 @@
             </div>
 
             <hr/>
-            <h4>Histórico da tarefa</h4>
-            <hr/>
 
-            <div class="activity">
-                <div class="clearfix muted">
-                    <span class="fLeft"><small></small></span>
-                    <span class="fRight"><small></small></span>
-                </div>
-                <div class="media">
-                    <span class="pull-left"><i class="icon-file-alt"></i></span>
-                    <div class="media-body">
+            <ul class="nav nav-tabs">
+                <li class="active"><a href="#historico" data-toggle="tab"><i class="icon-file-alt"></i> Acompanhamentos</a></li>
+                <li class=""><a href="#anexos" data-toggle="tab"><i class="icon-file-alt"></i> Anexos</a></li>
+            </ul>
+
+            <div class="tab-content clearfix">
+                <div class="tab-pane active" id="historico">
+                    <div class="activities">
+
+                        <?php foreach ($this->objTarefa->getHistorico($this->tarefa->id) as $historico) : ?>
+                            <div class="activity">
+                                <div class="clearfix muted">
+                                    <span class="fLeft"><small><?php echo $historico->findParentRow('Usuario')->nome; ?></small></span>
+                                    <span class="fRight"><small><?php echo date("d/m/Y H:i:s", strtotime($historico->quando)); ?></small></span>
+                                </div>
+                                <div class="media">
+                                    <span class="pull-left"><i class="icon-file-alt"></i></span>
+                                    <div class="media-body">
+                                        <?php echo nl2br($historico->texto); ?>                                   
+                                    </div>
+                                    <?php if ($historico->id_usuario == $this->idUsuario && $this->tarefa->situacao == 'PEN') : ?>
+                                        <a class="delete fRight" href="/tarefas/remove-acompanhamento/id/<?php echo $historico->id; ?>/tarefa/<?php echo $this->tarefa->id ?>">Excluir</a>
+                                    <?php endif; ?>
+                                </div>				
+                            </div>
+
+                            <hr>
+                        <?php endforeach; ?>
 
                     </div>
-                </div>				
+                </div>
+
+                <div class="tab-pane" id="anexos">
+                    <table class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th>Arquivo</th>
+                                <th>Usuário</th>
+                                <th>Visualizar</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <?php foreach ($this->tarefa->findDependentRowset('Anexo') as $anexo): ?>
+                                <tr>
+                                    <td><?php echo $anexo->nome; ?></td>
+                                    <td><?php echo $anexo->findParentRow('Usuario')->nome; ?></td>
+                                    <td><a href="/<?php echo $anexo->caminho; ?>" target="_blank">Visualizar</a></td>
+                                </tr>
+                            <?php endforeach; ?>
+                        </tbody>
+                    </table>
+                </div>
             </div>
-
-            <hr/>
-
         </div>
     </div>
 
@@ -91,9 +128,10 @@
             <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
             <h3>Concluir Tarefa</h3>
         </div>
-        <form method="post" action="/solicitacoes/concluir" id="formConcluir">
+        <form method="post" action="/tarefas/concluir" id="formConcluir">
             <div class="modal-body">
-                <input type="hidden" name="idtratamento" value="43">
+                <input type="hidden" name="id_usuario" value="<?php echo $this->idUsuario; ?>">
+                <input type="hidden" name="id_tarefa" value="<?php echo $this->tarefa->id; ?>">
                 <h4>Tem certeza de que gostaria concluir esta tarefa?</h4>
                 <p>Depois de finalizada, ela não poderá ser reaberta.</p>
             </div>
@@ -103,14 +141,34 @@
             </div>
         </form>
     </div>
+    
+    <!-- Modal Cancelar -->
+    <div id="modalCancelar" class="modal hide fade">
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+            <h3>Cancelar Tarefa</h3>
+        </div>
+        <form method="post" action="/tarefas/cancelar" id="formCancelar">
+            <div class="modal-body">
+                <input type="hidden" name="id_usuario" value="<?php echo $this->idUsuario; ?>">
+                <input type="hidden" name="id_tarefa" value="<?php echo $this->tarefa->id; ?>">
+                <h4>Tem certeza de que gostaria cancelar esta tarefa?</h4>
+                <p>Depois de cancelar, ela não poderá ser reaberta.</p>
+            </div>
+            <div class="modal-footer">
+                <a href="#." class="btn" data-dismiss="modal">Fechar</a>
+                <input type="submit" value="Cancelar" class="btn btn-primary">
+            </div>
+        </form>
+    </div>
 
     <!-- Modal Classificar -->
     <div id="modalAcompanhamento" class="modal hide fade">
         <div class="modal-header">
             <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-            <h3>Classificar Solicitação</h3>
+            <h3>Registrar Acompanhamento</h3>
         </div>
-        <form method="post" action="/tarefas/acompanhar" id="formClassificar">
+        <form method="post" action="/tarefas/acompanhamento" id="formAcompanhamento" enctype="multipart/form-data">
             <div class="modal-body">
 
                 <div class="row-fluid">
@@ -120,25 +178,28 @@
                                 <label>Comentário</label>
                             </div>
                             <div class="controls">
-                                <textarea name="texto" ></textarea>
+                                <textarea name="texto" rows="5" style="width: 97%;"></textarea>
                             </div>
                         </div>
 
                         <div class="control-group">
                             <label class="control-label">
-                                <label for="codigo">Código</label>
+                                <label for="anexo">Anexo</label>
                             </label>
                             <div class="controls">
-                                <input type="file" name="arquivo" />							
+                                <input type="file" name="arquivo" id="anexo"/>							
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
 
+            <input type="hidden" name="id_tarefa" value="<?php echo $this->tarefa->id; ?>" />
+            <input type="hidden" name="id_usuario" value="<?php echo $this->idUsuario; ?>" />
+
             <div class="modal-footer">
                 <a href="#." class="btn" data-dismiss="modal">Cancelar</a>
-                <input type="submit" value="Classificar" class="btn btn-primary">
+                <input type="submit" value="Gravar" class="btn btn-primary">
             </div>
         </form>
     </div>
@@ -150,37 +211,9 @@
             $("#solicitante").toggle('slow');
         });
 
-        $(function() {
-            $("#cancelarSolicitacao").click(function(e) {
-                e.preventDefault();
-                var url = $(this).attr('href');
-                var answer = confirm("Confirma o Cancelamento da Solicitação?");
-                if (answer) {
-                    window.location = url;
-                } else {
-                    return false;
-                }
-            });
-        });
-
-        $('#formTransferir').validate({
+        $('#formAcompanhamento').validate({
             rules: {
-                terceiro: {required: true}
-            }
-        });
-
-        $('#formConcluir').validate({
-            rules: {
-                descricao: {required: true}
-            }
-        });
-
-        $('#formClassificar').validate({
-            rules: {
-                tipo: {required: true},
-                processo: {required: true},
-                id_itemprocesso: {required: true},
-                previsaoConclusao: {required: true}
+                texto: {required: true}
             }
         });
 
