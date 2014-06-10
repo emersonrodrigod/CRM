@@ -51,12 +51,13 @@ class Tarefa extends Zend_Db_Table_Abstract {
         $tarefas = $usuarioAtual->findManyToManyRowset('Tarefa', 'TarefaUsuario', null, null, $select);
 
         foreach ($tarefas as $tarefa) {
-            $toReturn[] = array(
-                'id' => $tarefa->id,
-                'title' => $tarefa->texto,
-                'start' => $tarefa->dtTarefa,
-                'url' => '/tarefas/id/' . $tarefa->id
-            );
+            $evento = new Evento();
+            $evento->setId($tarefa->id);
+            $evento->setTitle($tarefa->texto);
+            $evento->setStart($tarefa->dtTarefa . ' ' . $tarefa->horaTarefa);
+            $evento->setUrl('/tarefas/visualizar/id/' . $tarefa->id);
+
+            $toReturn[] = $evento->toArray();
         }
 
         $toReturn = Zend_Json_Encoder::encode($toReturn);
