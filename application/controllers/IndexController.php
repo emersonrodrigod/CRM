@@ -2,12 +2,17 @@
 
 class IndexController extends Zend_Controller_Action {
 
+    private $idUsuario;
+
     public function init() {
-        /* Initialize action controller here */
+        $storage = new Zend_Auth_Storage_Session("usuario");
+        $this->idUsuario = $storage->read()->id;
     }
 
     public function indexAction() {
-        
+        $usuario = new Usuario();
+        $this->view->usuarios = $usuario->fetchAll();
+        $this->view->idUsuario = $this->idUsuario;
     }
 
     public function configuracoesAction() {

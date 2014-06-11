@@ -18,6 +18,55 @@ class TarefasController extends Zend_Controller_Action {
             $this->view->situacao = $this->_getParam('situacao');
             $this->view->tarefas = $tarefa->getAll($this->idUsuario, $this->_getParam('situacao'));
         }
+
+        $usuario = new Usuario();
+        $this->view->usuarios = $usuario->fetchAll();
+        $this->view->idUsuario = $this->idUsuario;
+    }
+
+    public function novoAction() {
+        $this->_helper->layout()->disableLayout();
+        $this->getHelper('viewRenderer')->setNoRender();
+
+        if ($this->_request->isPost()) {
+            $dados = $this->_request->getPost();
+
+            $dadosTarefa = array(
+                'dtTarefa' => Util::dataMysql($dados['dtAgendamento']),
+                'horaTarefa' => $dados['horaAgendamento'],
+                'texto' => $dados['texto'],
+                'id_usuario' => $dados['id_usuario'],
+            );
+
+            $usuariosTarefa = $dados['usuario'];
+
+            unset($dados['dtAgendamento']);
+            unset($dados['horaAgendamento']);
+            unset($dados['usuario']);
+
+            try {
+
+                $tarefa = new Tarefa();
+                $idTarefa = $tarefa->adicionar($dadosTarefa, $usuariosTarefa);
+
+                if ($_FILES['arquivo']['name'] != '') {
+                    $anexo = new Anexo();
+
+                    $dadosAnexo = array(
+                        'id_historico' => null,
+                        'id_usuario' => $dados['id_usuario'],
+                        'id_tarefa' => $idTarefa
+                    );
+
+                    $anexo->adicionar($dadosAnexo);
+                }
+
+                $this->_helper->flashMessenger(array('success' => 'Tarefa gravada com sucesso!'));
+                $this->_redirect('/tarefas');
+            } catch (Exception $ex) {
+                $this->_helper->flashMessenger(array('error' => 'Desculpe, ocorreu um erro: ' . $ex->getMessage()));
+            }
+        }
     }
 
     public function visualizarAction() {

@@ -28,6 +28,8 @@ class Tarefa extends Zend_Db_Table_Abstract {
         foreach ($usuarios as $usuario => $novo) {
             $this->adicionarUsuarioTarefa($novo, $id);
         }
+
+        return $id;
     }
 
     public function getAll($idUsuario, $situacao) {

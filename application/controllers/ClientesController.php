@@ -81,7 +81,7 @@ class ClientesController extends Zend_Controller_Action {
         $this->view->idUsuario = $storage->read()->id;
 
         $usuario = new Usuario();
-        $this->view->usuarios = $usuario->fetchAll('ativo = 1', 'nome asc');
+        $this->view->usuarios = $usuario->fetchAll('ativo = 1');
     }
 
     public function gravaHistoricoAction() {

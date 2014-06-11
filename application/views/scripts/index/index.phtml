@@ -2,7 +2,7 @@
     <div class="row-fluid">
 
         <div class="span6">
-            <a href="/tratamentos/novo" class="btn btn-primary"><i class="icon-tags icon-2x"></i> <br> Nova Tarefa</a>
+            <a href=".#" class="btn btn-primary" data-toggle="modal" data-target="#modalTarefa"><i class="icon-tags icon-2x"></i> <br> Nova Tarefa</a>
             <a href="#printAgenda" class="btn" data-toggle="modal"><i class="icon-print icon-2x"></i> <br> Imprimir Agenda</a>
         </div>
     </div>
@@ -47,8 +47,60 @@
     </div>
 </div>
 
-<script>
+<div id="modalTarefa" class="modal hide fade">
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h3>Nova Tarefa</h3>
+    </div>
+    <form method="post" action="/tarefas/novo" enctype="multipart/form-data" id="formTarefa">
+        <div class="modal-body">
+            <input type="hidden" name="id_usuario" value="<?php echo $this->idUsuario; ?>">
+            <div class="row-fluid">
+                <fieldset>
+                    <label for="formComentario">Descrição:</label>
+                    <textarea name="texto" id="formComentario" style="width: 97%;" rows="5"></textarea>
+                </fieldset>
 
+                <fieldset id="setDtAgenDocsImgs">
+
+                    <div id="setDtAgen">
+                        <label>Tarefa para quando?</label>
+                        <input type="text" name="dtAgendamento" id="formDtAgendamento" class="text input-medium datepicker" />
+                        às &nbsp; 
+                        <input type="text" name="horaAgendamento" id="formHoraAgendamento" class="text hora input-mini" />
+
+                        <label>Anexo</label>
+                        <input type="file" name="arquivo"/>
+
+                        <label>A quem se destina?</label>
+
+                        <ul class="ulSelUsuarios">
+                            <?php foreach ($this->usuarios as $usuario) : ?>
+                                <li>
+                                    <label>
+                                        <input type="checkbox" required minlength="1" name="usuario[]" value="<?php echo $usuario->id; ?>" class="checkbox" <?php echo ($this->idUsuario == $usuario->id ? 'checked="checked"' : ''); ?> /> 
+                                        <?php echo ($this->idUsuario == $usuario->id ? 'A mim' : $usuario->nome); ?><em></em>
+                                    </label>
+                                </li>
+                            <?php endforeach; ?>
+                        </ul><!--ulSelUsuarios-->
+
+                        <div class="clear"></div>
+
+                    </div><!--setDtAgen-->
+                </fieldset>
+                <div class="clear"></div>
+            </div>
+        </div>
+
+        <div class="modal-footer">
+            <a href="#." class="btn" data-dismiss="modal">Cancelar</a>
+            <input type="submit" value="Gravar" class="btn btn-primary">
+        </div>
+    </form>
+</div>
+
+<script>
     $('#calendar').fullCalendar({
         header: {
             left: 'prev,next today',
@@ -63,5 +115,12 @@
         events: '/tarefas/eventos'
     });
 
-
+    $('#formTarefa').validate({
+        rules: {
+            dtAgendamento: {required: true},
+            horaAgendamento: {required: true},
+            texto: {required: true},
+            usuario: {required: true}
+        }
+    });
 </script>
