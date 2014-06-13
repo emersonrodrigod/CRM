@@ -131,6 +131,7 @@ h2 {font-weight: 100;font-family: "Source Sans Pro",Arial,sans-serif;}
 /*Modal Header*/
 .modal .modal-header {background-color: #2c3e50 !important;border-bottom: 0 !important;color: #fff !important;}
 .modal.fade.in {top: 10%;}
+.close {position: absolute;top: 10px;right: 10px;color: #fff;}
 
 /*Notificações*/
 .icone {width: 52px !important;height: 52px !important;float: left;text-align: center;margin-right: 10px;}
@@ -301,7 +302,7 @@ a.finTarefa.atrasada { background-position:0px -28px; }
 #conteudoCanvas ul li.item .menu li strong { font:bold 12px Arial; }
 #conteudoCanvas ul li.item:hover .menu { display:block; }
 
-ul.ulSelUsuarios { text-align:left; max-height:150px; overflow:auto; padding:3px 3px 3px 0px; width:300px; margin:0;}
+ul.ulSelUsuarios { text-align:left; max-height:100px; overflow:auto; padding:3px 3px 3px 0px; width:300px; margin:0;}
 ul.ulSelUsuarios li { margin:0px!important; }
 ul.ulSelUsuarios li:hover { background:#fffac3; }
 ul.ulSelUsuarios li.buscando { color:#999; background:#fff url(../imagens/loaders/ajax-loader-azul.gif) no-repeat center left; padding-left:24px; }
