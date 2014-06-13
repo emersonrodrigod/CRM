@@ -328,3 +328,7 @@ ul.ulSelUsuarios li em { margin-left:5px; font:11px Arial; }
 .fc table {font-size: 1em !important;}
 .fc-header-title h2{font-size: 1.4em !important;}
 .fc-event-inner{font-size: 11px !important;}
+
+.PEN {width: 14px;height: 14px;background: url(/img/icone-finalizado.gif) no-repeat 0px -14px;text-decoration: none;}
+.CON {width: 14px;height: 14px;background: url(/img/icone-finalizado.gif) no-repeat 0px 0px;text-decoration: none;}
+.CAN {width: 14px;height: 14px;background: url(/img/icone-finalizado.gif) no-repeat 0px -28px;text-decoration: none;}

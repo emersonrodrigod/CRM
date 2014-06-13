@@ -102,7 +102,7 @@
                     <span rel="tooltip" class="data ml20">
                         <?php echo date("d/m/Y", strtotime($historico->quando)); ?> às <?php echo date("H:i:s", strtotime($historico->quando)); ?>
                         <?php if ($historico->tarefa == 1) : ?>
-                            , <a href="/tarefas/visualizar/id/<?php echo $historico->findDependentRowset('Tarefa')[0]->id; ?>">tarefa agendada para <?php echo date("d/m/Y", strtotime($historico->findDependentRowset('Tarefa')[0]->dtTarefa)); ?></a>
+                        , <a href="/tarefas/visualizar/id/<?php echo $historico->findDependentRowset('Tarefa')[0]->id; ?>"> <i class="<?php echo $historico->findDependentRowset('Tarefa')[0]->situacao; ?>">&nbsp;&nbsp;&nbsp;&nbsp;</i> tarefa agendada para <?php echo date("d/m/Y", strtotime($historico->findDependentRowset('Tarefa')[0]->dtTarefa)); ?></a>
                         <?php endif; ?>
 
                     </span>
