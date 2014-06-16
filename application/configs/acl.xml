@@ -30,5 +30,10 @@
         <a0010 role="admin" resource="default:tarefas" />
         <a0011 role="guest" resource="default:error" />
         <a0012 role="admin" resource="default:application" />
+        <a0013 role="usuario" resource="default:index" />
+        <a0014 role="usuario" resource="default:ajax" />
+        <a0015 role="usuario" resource="default:clientes" />
+        <a0016 role="usuario" resource="default:tarefas" />
+        <a0017 role="usuario" resource="default:auth" />
     </allow>
 </acl>
