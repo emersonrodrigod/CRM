@@ -61,6 +61,12 @@
         lang: 'pt-br',
         weekNumbers: false,
         editable: false,
-        events: '/tarefas/eventos'
+        events: '/tarefas/eventos',
+        eventRender: function(event, element) {
+            element.tooltip({
+                title: 'Solicitante: ' + event.solicitante,
+                placement: 'right'
+            });
+        }
     });
 </script>

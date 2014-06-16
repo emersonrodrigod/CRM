@@ -6,6 +6,7 @@ class Evento {
     private $title;
     private $start;
     private $url;
+    private $solicitante;
 
     public function getId() {
         return $this->id;
@@ -39,6 +40,14 @@ class Evento {
         $this->url = $url;
     }
 
+    public function getSolicitante() {
+        return $this->solicitante;
+    }
+
+    public function setSolicitante($solicitante) {
+        $this->solicitante = $solicitante;
+    }
+
     public function toArray() {
         $return = array();
 
@@ -46,6 +55,7 @@ class Evento {
         $return['title'] = $this->getTitle();
         $return['start'] = $this->getStart();
         $return['url'] = $this->getUrl();
+        $return['solicitante'] = $this->getSolicitante();
 
         return $return;
     }

@@ -58,6 +58,7 @@ class Tarefa extends Zend_Db_Table_Abstract {
             $evento->setTitle($tarefa->texto);
             $evento->setStart($tarefa->dtTarefa . ' ' . $tarefa->horaTarefa);
             $evento->setUrl('/tarefas/visualizar/id/' . $tarefa->id);
+            $evento->setSolicitante($tarefa->findParentRow('Usuario')->nome);
 
             $toReturn[] = $evento->toArray();
         }
