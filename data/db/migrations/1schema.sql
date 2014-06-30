@@ -2,10 +2,10 @@
 -- version 4.0.4
 -- http://www.phpmyadmin.net
 --
--- Máquina: localhost
--- Data de Criação: 05-Jun-2014 às 19:15
--- Versão do servidor: 5.6.12-log
--- versão do PHP: 5.4.12
+-- MÃ¡quina: localhost
+-- Data de CriaÃ§Ã£o: 30-Jun-2014 Ã s 20:32
+-- VersÃ£o do servidor: 5.6.12-log
+-- versÃ£o do PHP: 5.4.12
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET time_zone = "+00:00";
@@ -19,9 +19,6 @@ SET time_zone = "+00:00";
 --
 -- Base de Dados: `intranet`
 --
-CREATE DATABASE IF NOT EXISTS `intranet` DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;
-USE `intranet`;
-
 -- --------------------------------------------------------
 
 --
@@ -39,7 +36,7 @@ CREATE TABLE IF NOT EXISTS `anexo` (
   KEY `id_historico` (`id_historico`),
   KEY `id_tarefa` (`id_tarefa`),
   KEY `id_usuario` (`id_usuario`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=31 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=14 ;
 
 -- --------------------------------------------------------
 
@@ -91,7 +88,7 @@ CREATE TABLE IF NOT EXISTS `departamento` (
   `id_empresa` int(11) NOT NULL,
   PRIMARY KEY (`id`),
   KEY `fk_departamento_empresa_idx` (`id_empresa`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=21 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=19 ;
 
 -- --------------------------------------------------------
 
@@ -122,7 +119,24 @@ CREATE TABLE IF NOT EXISTS `historico` (
   PRIMARY KEY (`id`),
   KEY `id_cliente` (`id_cliente`),
   KEY `id_usuario` (`id_usuario`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=90 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=59 ;
+
+-- --------------------------------------------------------
+
+--
+-- Estrutura da tabela `historico_tarefa`
+--
+
+CREATE TABLE IF NOT EXISTS `historico_tarefa` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `quando` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `texto` text NOT NULL,
+  `id_tarefa` int(11) NOT NULL,
+  `id_usuario` int(11) NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `id_tarefa` (`id_tarefa`),
+  KEY `id_usuario` (`id_usuario`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=37 ;
 
 -- --------------------------------------------------------
 
@@ -137,7 +151,7 @@ CREATE TABLE IF NOT EXISTS `migrations` (
   `id_usuario` int(11) NOT NULL,
   PRIMARY KEY (`id`),
   KEY `id_usuario` (`id_usuario`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=31 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=37 ;
 
 -- --------------------------------------------------------
 
@@ -169,11 +183,12 @@ CREATE TABLE IF NOT EXISTS `tarefa` (
   `conclusao` timestamp NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
   `id_historico` int(11) DEFAULT NULL,
   `situacao` char(3) NOT NULL DEFAULT 'PEN',
+  `dtAbertura` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`),
   KEY `id_usuario` (`id_usuario`),
   KEY `id_cliente` (`id_cliente`),
   KEY `id_historico` (`id_historico`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=13 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=29 ;
 
 -- --------------------------------------------------------
 
@@ -188,7 +203,7 @@ CREATE TABLE IF NOT EXISTS `tarefa_usuario` (
   PRIMARY KEY (`id`),
   UNIQUE KEY `id_usuario` (`id_usuario`,`id_tarefa`),
   KEY `id_tarefa` (`id_tarefa`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=19 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=38 ;
 
 -- --------------------------------------------------------
 
@@ -212,7 +227,7 @@ CREATE TABLE IF NOT EXISTS `usuario` (
   UNIQUE KEY `email_UNIQUE` (`email`),
   KEY `fk_usuario_empresa_idx` (`id_empresa`),
   KEY `fk_usuario_departamento_idx` (`id_departamento`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=19 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=25 ;
 
 --
 -- Constraints for dumped tables
@@ -245,6 +260,13 @@ ALTER TABLE `departamento`
 ALTER TABLE `historico`
   ADD CONSTRAINT `historico_ibfk_1` FOREIGN KEY (`id_cliente`) REFERENCES `cliente` (`id`),
   ADD CONSTRAINT `historico_ibfk_2` FOREIGN KEY (`id_usuario`) REFERENCES `usuario` (`id`);
+
+--
+-- Limitadores para a tabela `historico_tarefa`
+--
+ALTER TABLE `historico_tarefa`
+  ADD CONSTRAINT `historico_tarefa_ibfk_1` FOREIGN KEY (`id_tarefa`) REFERENCES `tarefa` (`id`),
+  ADD CONSTRAINT `historico_tarefa_ibfk_2` FOREIGN KEY (`id_usuario`) REFERENCES `usuario` (`id`);
 
 --
 -- Limitadores para a tabela `migrations`
