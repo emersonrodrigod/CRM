@@ -1,0 +1,51 @@
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <title>CRM - Vicentinos</title>
+        <meta name="viewport" content="initial-scale=1.0, user-scalable=no, width=device-width, initial-scale=1.0">
+        <!-- Le styles -->
+        <link href="/lib/bootstrap/css/bootstrap.min.css" media="all" rel="stylesheet" type="text/css">
+        <link href="/css/print.css" media="all" rel="stylesheet" type="text/css">
+        <style>
+            *{
+                font-size: 10px;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="content">
+            <img src="/img/logo_login.png" alt="" width="20%" align="right"> 
+            <h4>Agenda de Tarefas - <?php echo $this->dtInicial; ?> a <?php echo $this->dtFinal; ?></h4>
+
+            <hr>
+
+            <table class="table table-condensed">
+                <thead>
+                    <tr>
+                        <th width="5%">Data</th>
+                        <th width="5%">Hora</th>
+                        <th>Cliente</th>
+                        <th>Resumo</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <?php foreach ($this->tarefas as $tarefa) : ?>
+                        <tr>
+
+                            <td><?php echo date("d/m/y", strtotime($tarefa->dtTarefa)); ?></td>
+                            <td><?php echo date("H:i",strtotime($tarefa->horaTarefa)); ?></td>
+                            <td><?php echo ($tarefa->id_cliente == null ? 'Não Definido' : $tarefa->findParentRow('Cliente')->nome); ?></td>
+                            <td><?php echo substr($tarefa->texto, 0, 40) . "..."; ?></td>
+                        </tr>
+                    <?php endforeach; ?>
+                </tbody>
+            </table>      
+        </div>
+
+        <script type="text/javascript">
+            window.print();
+        </script>
+
+
+    </body>
+</html>

@@ -13,7 +13,6 @@
 
             <div id="dadosSolicitacao">
                 <h4>Informações</h4>
-                <p><strong>Cliente Vinculado:</strong> <?php echo ($this->tarefa->id_cliente == null ? 'Não Definido' : $this->tarefa->findParentRow('Cliente')->nome); ?></p>
                 <p><strong>Abertura:</strong> <?php echo date("d/m/Y H:i", strtotime($this->tarefa->dtAbertura)); ?></p>
                 <p><strong>Cliente Vinculado:</strong> <?php echo ($this->tarefa->id_cliente == null ? 'Não Definido' : $this->tarefa->findParentRow('Cliente')->nome); ?></p>
                 <p><strong>Situação:</strong> <?php echo $this->objTarefa->getSituacao($this->tarefa->situacao); ?></p>

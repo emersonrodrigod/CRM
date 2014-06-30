@@ -179,4 +179,17 @@ class TarefasController extends Zend_Controller_Action {
         }
     }
 
+    public function imprimirAction() {
+        $this->_helper->layout()->disableLayout();
+        if ($this->_request->isPost()) {
+            $dados = $this->_request->getPost();
+
+            $tarefa = new Tarefa();
+            $tarefas = $tarefa->getTasksByPediod($this->idUsuario, $dados['inicioAgenda'], $dados['terminoAgenda']);
+            $this->view->tarefas = $tarefas;
+            $this->view->dtInicial = $dados['inicioAgenda'];
+            $this->view->dtFinal = $dados['terminoAgenda'];
+        }
+    }
+
 }

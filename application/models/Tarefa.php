@@ -144,6 +144,18 @@ class Tarefa extends Zend_Db_Table_Abstract {
         $this->adicionaHistorico($dadosHistorico);
     }
 
+    public function getTasksByPediod($idUsuario, $initialDate, $finalDate) {
+        $usuario = new Usuario();
+        $initialDate = Util::dataMysql($initialDate);
+        $finalDate = Util::dataMysql($finalDate);
+
+        $select = $this->select()->where("dtTarefa >= '$initialDate' and dtTarefa <= '$finalDate' and situacao = 'PEN'")->order("id desc");
+
+        $usuarioAtual = $usuario->find($idUsuario)->current();
+        $tarefas = $usuarioAtual->findManyToManyRowset('Tarefa', 'TarefaUsuario', null, null, $select);
+        return $tarefas;
+    }
+
     public function getSituacao($situacao) {
         switch ($situacao) {
             case 'PEN' : return 'Pendente';

@@ -19,11 +19,11 @@
     </div>
     <div class="modal-body">
 
-        <form name="formPrintAgenda" action="/tratamento/printagenda" class="form-horizontal ng-pristine ng-valid" target="psicontroleAgenda" method="post">
+        <form name="formPrintAgenda" action="/tarefas/imprimir" target="crmAgenda" class="form-horizontal" method="post">
             <div class="control-group">
                 <label class="control-label" for="inputEmail">Data de Início</label>
                 <div class="controls">
-                    <input type="text" name="inicioAgenda" class="input-small datepicker" value="08/06/2014">
+                    <input type="text" name="inicioAgenda" class="input-small datepicker" value="<?php echo date('d/m/Y', strtotime("-1 days"));?>">
                     <div class="input-append">
                         <span class="add-on"><i class="icon-calendar"></i></span>
                     </div>        
@@ -32,7 +32,7 @@
             <div class="control-group">
                 <label class="control-label" for="inputPassword">Data de Término</label>
                 <div class="controls">
-                    <input type="text" name="terminoAgenda" class="input-small datepicker" value="14/06/2014">
+                    <input type="text" name="terminoAgenda" class="input-small datepicker" value="<?php echo date('d/m/Y', strtotime("+10 days"));?>">
                     <div class="input-append">
                         <span class="add-on"><i class="icon-calendar"></i></span>
                     </div>        
@@ -50,6 +50,14 @@
 <?php include(APPLICATION_PATH . '/views/scripts/partials/novaTarefa.phtml'); ?>
 
 <script>
+
+    $(document).on('click', '#submitPrintAgenda', function() {
+
+        window.open("", 'crmAgenda', 'width=800,height=600')
+        $('form[name=formPrintAgenda]').submit();
+        $('#printAgenda').modal('hide');
+    });
+
     $('#calendar').fullCalendar({
         header: {
             left: 'prev,next today',
