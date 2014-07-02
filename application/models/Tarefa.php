@@ -25,9 +25,17 @@ class Tarefa extends Zend_Db_Table_Abstract {
     public function adicionar($dados, $usuarios) {
         $id = $this->insert($dados);
 
+        $usuario = new Usuario();
+
         foreach ($usuarios as $usuario => $novo) {
             $this->adicionarUsuarioTarefa($novo, $id);
         }
+
+        $inserido = $this->find($id)->current();
+
+        $this->enviaEmail(
+                "Tarefa aberta", "Você foi mencionado em uma tarefa", $inserido, $this->getEmailList($id)
+        );
 
         return $id;
     }
@@ -94,6 +102,13 @@ class Tarefa extends Zend_Db_Table_Abstract {
 
     public function adicionaHistorico($dados) {
         $historico = new HistoricoTarefa();
+
+        $inserido = $this->find($dados['id_tarefa'])->current();
+        $inserido->texto = $dados['texto'];
+        $this->enviaEmail(
+                "Acompanhamento adicionado a tarefa", "Uma tarefa recebeu um acompanhamento", $inserido, $this->getEmailList($dados['id_tarefa'])
+        );
+
         return $historico->insert($dados);
     }
 
@@ -162,6 +177,32 @@ class Tarefa extends Zend_Db_Table_Abstract {
             case 'CON' : return 'Concluída';
             case 'CAN' : return 'Cancelada';
         }
+    }
+
+    public function getEmailList($idTarefa) {
+        $atual = $this->find($idTarefa)->current();
+        $usuarios = $atual->findManyToManyRowset('Usuario', 'TarefaUsuario');
+
+        foreach ($usuarios as $usuario) {
+            $emails[] = $usuario->email;
+        }
+
+        return $emails;
+    }
+
+    public function enviaEmail($titulo, $texto, $ssi, $from = array()) {
+        $html = new Zend_View();
+        $html->setScriptPath(APPLICATION_PATH . '/views/scripts/tarefas/');
+
+        $html->assign('titulo', $titulo);
+        $html->assign('texto', $texto);
+        $html->assign('registro', $ssi);
+
+        $bodyText = $html->render('notificacao.phtml');
+
+        $util = new Util();
+
+        $util->sendMail("CRM - Notificação Automática", $bodyText, $from);
     }
 
 }

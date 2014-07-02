@@ -34,7 +34,7 @@ class Util {
         }
 
         $mail->setSubject($subject);
-        $mail->setFrom('informatica@vicentinos.com.br', 'SSI Vicentino´s');
+        $mail->setFrom('informatica@vicentinos.com.br', 'CRM Vicentino´s');
         $mail->send($smtp);
     }
 
