@@ -1,0 +1,10 @@
+language: php
+script: phpunit -c tests/phpunit.xml --verbose --coverage-text tests/
+
+php:
+  - 5.3
+  - 5.4
+
+before_script:
+
+after_script:
