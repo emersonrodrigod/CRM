@@ -8,12 +8,21 @@
     <filter>
         <whitelist>
             <directory suffix=".php">../application</directory>
-            <directory suffix=".php">../library</directory>
+            <directory suffix=".php">../library/Webagille</directory>
             <exclude>
                 <directory suffix=".phtml">../application</directory>
                 <file>../application/bootstrap.php</file>
             </exclude>
         </whitelist>
     </filter>
+    
+    <logging>
+        <log type="coverage-html" 
+             target="./log/report" 
+             chartset="UTF-8" yui="true" hightlight="true" 
+             lowUpperBound="35" hightLowerBound="70" />
+        
+        <log type="testdox-html" target="./log/testdox.html" />
+    </logging>
     
 </phpunit>
